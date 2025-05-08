@@ -7,6 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
@@ -44,13 +45,10 @@
             flex-direction: column;
             align-items: center;
             gap: 1rem;
-        }
-
-        .password-label {
-            font-family: 'Poppins', sans-serif;
-            font-size: 18px;
-            color: #d3d3d3;
-            margin-bottom: 0.5rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         #password-input {
@@ -94,7 +92,6 @@
 <body>
     <div id="password-container">
         <div id="password-form">
-            <div class="password-label">Password</div>
             <input type="password" id="password-input" placeholder="Enter Password">
             <div class="feedback" id="feedback">incorrect password</div>
         </div>
