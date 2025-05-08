@@ -105,15 +105,24 @@
         const passwordContainer = document.getElementById('password-container');
         const passwordInput = document.getElementById('password-input');
         const feedback = document.getElementById('feedback');
+        let typingTimer;
 
         passwordInput.addEventListener('input', function() {
             if (this.value === correctPassword) {
                 window.location.href = "https://drive.google.com/file/d/1RIUUNGkx4JKaOOdmLPf0Aehaw1dKTagh/view?usp=sharing";
-            } else if (this.value.length > 0) {
-                feedback.classList.add('show');
-                setTimeout(() => {
-                    feedback.classList.remove('show');
-                }, 2000);
+            } else {
+                // Clear any existing timer
+                clearTimeout(typingTimer);
+                
+                // Set a new timer to show feedback after user stops typing
+                typingTimer = setTimeout(() => {
+                    if (this.value.length > 0) {
+                        feedback.classList.add('show');
+                        setTimeout(() => {
+                            feedback.classList.remove('show');
+                        }, 2000);
+                    }
+                }, 500); // Wait 500ms after user stops typing
             }
         });
 
