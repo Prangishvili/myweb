@@ -46,6 +46,13 @@
             gap: 1rem;
         }
 
+        .password-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            color: #d3d3d3;
+            margin-bottom: 0.5rem;
+        }
+
         #password-input {
             padding: 0.5rem;
             background-color: black;
@@ -70,19 +77,6 @@
             color: #fff;
         }
 
-        .submit-text {
-            font-family: 'Inter', sans-serif;
-            font-size: 18px;
-            color: #d3d3d3;
-            margin-top: 0.5rem;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .submit-text:hover {
-            color: #fff;
-        }
-
         .feedback {
             font-family: 'Inter', sans-serif;
             font-size: 14px;
@@ -100,8 +94,8 @@
 <body>
     <div id="password-container">
         <div id="password-form">
+            <div class="password-label">Password</div>
             <input type="password" id="password-input" placeholder="Enter Password">
-            <div class="submit-text" id="submit-button">submit</div>
             <div class="feedback" id="feedback">incorrect password</div>
         </div>
     </div>
@@ -110,29 +104,17 @@
         const correctPassword = "121212";
         const passwordContainer = document.getElementById('password-container');
         const passwordInput = document.getElementById('password-input');
-        const submitButton = document.getElementById('submit-button');
         const feedback = document.getElementById('feedback');
 
-        function checkPassword() {
-            if (passwordInput.value === correctPassword) {
+        passwordInput.addEventListener('input', function() {
+            if (this.value === correctPassword) {
                 window.location.href = "https://drive.google.com/file/d/1RIUUNGkx4JKaOOdmLPf0Aehaw1dKTagh/view?usp=sharing";
-            } else {
+            } else if (this.value.length > 0) {
                 feedback.classList.add('show');
                 setTimeout(() => {
                     feedback.classList.remove('show');
                 }, 2000);
             }
-        }
-
-        submitButton.addEventListener('click', checkPassword);
-        passwordInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkPassword();
-            }
-        });
-
-        passwordInput.addEventListener('input', function() {
-            feedback.classList.remove('show');
         });
 
         passwordInput.addEventListener('focus', function() {
