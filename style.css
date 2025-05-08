@@ -1,0 +1,48 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: pink;
+  font-family: Arial, sans-serif;
+}
+
+main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+h1 {
+  font-size: 48px;
+  color: white;
+  display: flex;
+  gap: 0.1em;
+}
+
+h1 span {
+  display: inline-block;
+  animation: jiggle 0.5s infinite alternate;
+}
+
+@keyframes jiggle {
+  from { transform: rotate(-5deg); }
+  to { transform: rotate(5deg); }
+}
+
+button {
+  margin-top: 2rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.2rem;
+  background-color: white;
+  color: pink;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ffe6f0;
+}

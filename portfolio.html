@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Flow+Circular&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            background-color: black;
+            font-family: 'Flow Circular', Arial, sans-serif;
+            color: #d3d3d3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #password-container {
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            z-index: 1000;
+        }
+
+        #password-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        #password-input {
+            padding: 0.5rem;
+            background-color: black;
+            border: none;
+            color: #d3d3d3;
+            width: 200px;
+            text-align: center;
+            font-size: 28px;
+            font-family: 'Flow Circular', Arial, sans-serif;
+        }
+
+        #password-input::placeholder {
+            color: #d3d3d3;
+            text-align: center;
+            font-size: 28px;
+            font-family: 'Flow Circular', Arial, sans-serif;
+        }
+
+        #password-input:focus {
+            outline: none;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="password-container">
+        <div id="password-form">
+            <input type="password" id="password-input" placeholder="Enter Password">
+        </div>
+    </div>
+
+    <script>
+        const correctPassword = "12121212";
+        const passwordContainer = document.getElementById('password-container');
+        const passwordInput = document.getElementById('password-input');
+
+        passwordInput.addEventListener('input', function() {
+            if (passwordInput.value === correctPassword) {
+                window.location.href = "https://drive.google.com/file/d/1RIUUNGkx4JKaOOdmLPf0Aehaw1dKTagh/view?usp=sharing";
+            }
+        });
+
+        passwordInput.addEventListener('focus', function() {
+            this.placeholder = '';
+        });
+
+        passwordInput.addEventListener('blur', function() {
+            if (this.value === '') {
+                this.placeholder = 'Enter Password';
+            }
+        });
+    </script>
+</body>
+</html> 
