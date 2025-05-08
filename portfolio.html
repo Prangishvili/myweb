@@ -87,6 +87,12 @@
         .feedback.show {
             opacity: 1;
         }
+
+        .success {
+            color: #4CAF50;
+            font-size: 16px;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
@@ -106,10 +112,26 @@
 
         passwordInput.addEventListener('input', function() {
             if (this.value === correctPassword) {
-                window.location.href = "https://drive.google.com/file/d/1RIUUNGkx4JKaOOdmLPf0Aehaw1dKTagh/view?usp=sharing";
+                // Show success message
+                feedback.textContent = "success";
+                feedback.classList.remove('show');
+                feedback.classList.add('success');
+                feedback.classList.add('show');
+                
+                // Disable input
+                this.disabled = true;
+                
+                // Redirect after a short delay
+                setTimeout(() => {
+                    window.location.href = "https://drive.google.com/file/d/1RIUUNGkx4JKaOOdmLPf0Aehaw1dKTagh/view?usp=sharing";
+                }, 1000);
             } else {
                 // Clear any existing timer
                 clearTimeout(typingTimer);
+                
+                // Reset feedback styling
+                feedback.classList.remove('success');
+                feedback.textContent = "incorrect password";
                 
                 // Set a new timer to show feedback after user stops typing
                 typingTimer = setTimeout(() => {
