@@ -14,6 +14,42 @@
     <h1 id="title">miYvaRxaR FiSoOo</h1>
     <button onclick="showPopup()">visi?</button>
   </main>
+  <style>
+    .fountain-img {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      pointer-events: none;
+      animation: fall 2s ease-out forwards;
+      z-index: 9999;
+    }
+    @keyframes fall {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(200px) scale(0.5);
+      }
+    }
+  </style>
+  <script src="fountain.js"></script>
+  <script>
+    // Mouse fountain effect
+    const imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Google_Images_2015_logo.svg/1024px-Google_Images_2015_logo.svg.png';
+    document.addEventListener('mousemove', (e) => {
+      const img = document.createElement('img');
+      img.src = imageUrl;
+      img.className = 'fountain-img';
+      img.style.left = `${e.pageX}px`;
+      img.style.top = `${e.pageY}px`;
+      document.body.appendChild(img);
+      setTimeout(() => {
+        img.remove();
+      }, 2000);
+    });
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
