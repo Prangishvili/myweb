@@ -116,7 +116,7 @@
 // Initialize on canvas element
 window.addEventListener('DOMContentLoaded', () => {
   new Snowflakes('#canvas', {
-    num: 100,
+    num: 50,
     icon: "🍓",
     color: "#fff"
   });
