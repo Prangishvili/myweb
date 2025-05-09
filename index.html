@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <canvas id="canvas"></canvas>
   <main>
     <img id="fiso" src="assets/fiso.png" alt="Fiso" style="width: min(100px, 20vw); height: auto; margin-bottom: 20px;">
     <h1 id="title">miYvaRxaR FiSoOo</h1>
@@ -24,10 +25,22 @@
       align-items: center;
     }
     
+    #canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
     main {
       text-align: center;
       padding: 20px;
       max-width: 90vw;
+      position: relative;
+      z-index: 2;
     }
 
     h1 {
@@ -68,6 +81,7 @@
     }
   </style>
   <script src="fountain.js"></script>
+  <script src="snowflakes.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
