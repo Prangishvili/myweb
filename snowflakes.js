@@ -117,7 +117,7 @@
 window.addEventListener('DOMContentLoaded', () => {
   new Snowflakes('#canvas', {
     num: 100,
-    icon: "❄",
+    icon: "🍓",
     color: "#fff"
   });
 }); 
