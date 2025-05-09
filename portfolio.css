@@ -45,12 +45,17 @@ body, html {
     min-width: 100px;
     text-align: center;
     font-size: 28px;
+    border: none;
+    outline: none;
+    transition: all 0.3s ease;
 }
 
 #password-input::placeholder {
     color: var(--text-color);
     text-align: center;
     font-size: 28px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
 }
 
 #password-input:focus {
@@ -58,17 +63,33 @@ body, html {
     background-color: var(--primary-color);
 }
 
+#password-input:focus::placeholder {
+    opacity: 0.3;
+}
+
 .feedback {
     color: var(--error-color);
     margin-top: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
 }
 
 .feedback.show {
     opacity: 1;
+    animation: fadeInOut 2s ease;
 }
 
 .success {
     color: #4CAF50;
     font-size: 16px;
     font-weight: 500;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
 } 
