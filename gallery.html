@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Oto Prangishvili</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #fff;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            color: #181818;
+        }
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1rem 4rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .subheading {
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #444;
+            margin-bottom: 1.2rem;
+            font-family: 'Inter', Arial, sans-serif;
+            font-weight: 500;
+            text-align: center;
+        }
+        .main-heading {
+            font-family: 'EB Garamond', serif;
+            font-size: 3.2rem;
+            font-weight: 400;
+            margin: 0 0 2.5rem 0;
+            text-align: center;
+            line-height: 1.1;
+        }
+        .tabs {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+            justify-content: center;
+            width: 100%;
+        }
+        .tab {
+            padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: #222;
+            font-size: 1.1rem;
+            font-family: 'Inter', Arial, sans-serif;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .tab.active {
+            color: #181818;
+            border-bottom: 2px solid #181818;
+        }
+        .gallery-content {
+            display: none;
+            width: 100%;
+        }
+        .gallery-content.active {
+            display: block;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            width: 100%;
+        }
+        .gallery-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .gallery-item img {
+            width: 100%;
+            aspect-ratio: 16/10;
+            object-fit: cover;
+            border-radius: 0;
+            margin-bottom: 1.2rem;
+            background: #eee;
+        }
+        .item-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            color: #181818;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        .item-desc {
+            font-size: 0.98rem;
+            color: #444;
+            margin-bottom: 0.3rem;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        .item-date {
+            font-size: 0.92rem;
+            color: #888;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        @media (max-width: 900px) {
+            .main-heading {
+                font-size: 2.2rem;
+            }
+            .gallery-grid {
+                gap: 1.5rem;
+            }
+        }
+        @media (max-width: 700px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery-container">
+        <div class="subheading">Articles for Financial Excellence</div>
+        <div class="main-heading">Notes from our journal</div>
+        <div class="tabs">
+            <button class="tab active" data-tab="designs">Designs</button>
+            <button class="tab" data-tab="illustrations">Illustrations</button>
+        </div>
+        <div class="gallery-content active" id="designs">
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="assets/design1.jpg" alt="Design 1">
+                    <div class="item-title">Tax Season Tips</div>
+                    <div class="item-desc">It all begins with an idea.</div>
+                    <div class="item-date">Oct 4, 2022</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/design2.jpg" alt="Design 2">
+                    <div class="item-title">Why do I need to start thinking about estate planning?</div>
+                    <div class="item-desc">It all begins with an idea.</div>
+                    <div class="item-date">Sep 29, 2022</div>
+                </div>
+                <!-- Add more design items as needed -->
+            </div>
+        </div>
+        <div class="gallery-content" id="illustrations">
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="assets/illustration1.jpg" alt="Illustration 1">
+                    <div class="item-title">Illustration Title 1</div>
+                    <div class="item-desc">A short description for illustration 1.</div>
+                    <div class="item-date">Aug 12, 2022</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/illustration2.jpg" alt="Illustration 2">
+                    <div class="item-title">Illustration Title 2</div>
+                    <div class="item-desc">A short description for illustration 2.</div>
+                    <div class="item-date">Jul 30, 2022</div>
+                </div>
+                <!-- Add more illustration items as needed -->
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.gallery-content');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+                    tab.classList.add('active');
+                    const contentId = tab.getAttribute('data-tab');
+                    document.getElementById(contentId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
