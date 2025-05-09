@@ -5,8 +5,8 @@ const style = document.createElement('style');
 style.textContent = `
   .fountain-img {
     position: absolute;
-    width: 80px;
-    height: 80px;
+    width: 200px;
+    height: 200px;
     pointer-events: none;
     transform: translate(-50%, -50%);
     animation: fallWithGravity 2s ease-in forwards;
