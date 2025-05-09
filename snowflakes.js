@@ -73,12 +73,12 @@
   };
 
   Snowflakes.prototype.update = function() {
-    this.angle += 0.01;
+    this.angle += 0.005;
     for (let i = 0; i < this.num; i++) {
       let f = this.flakes[i];
       if (f.s < 7) f.s = 7;
-      f.y += Math.cos(this.angle + f.d) + 1 + f.s / 2;
-      f.x += Math.sin(this.angle) * 2;
+      f.y += (Math.cos(this.angle + f.d) + 1 + f.s / 2) * 0.3;
+      f.x += Math.sin(this.angle) * 1;
 
       if (f.x > this.width + 5 || f.x < -5 || f.y > this.height) {
         if (i % 3 > 0) {
