@@ -194,8 +194,8 @@
                 if (loadedImages === totalImages) {
                     setTimeout(() => {
                         loadingOverlay.classList.add('hidden');
-                        resetInitialPosition(); // Center first layer
-                        updateImages(0); // Start initial animation
+                        // Start initial animation
+                        updateImages(0);
                     }, 500);
                 }
             }
@@ -211,74 +211,18 @@
                         
                         // Load image to get its natural dimensions
                         img.onload = function() {
-                            const depth = Math.floor(Math.random() * 6);
-                            img.dataset.depth = depth;
-                            
-                            // Calculate position
-                            let x, y;
-                            if (depth === 0) {
-                                // Random position within viewport for first layer
-                                const padding = 100; // Padding from viewport edges
-                                const maxX = window.innerWidth - this.naturalWidth * 0.4 - padding;
-                                const maxY = window.innerHeight - this.naturalHeight * 0.4 - padding;
-                                
-                                x = padding + Math.random() * maxX;
-                                y = padding + Math.random() * maxY;
-                            } else {
-                                // Random position for other layers
-                                x = (gridX * window.innerWidth) + (Math.random() * (window.innerWidth - this.naturalWidth));
-                                y = (gridY * window.innerHeight) + (Math.random() * (window.innerHeight - this.naturalHeight));
-                            }
-                            
+                            const x = (gridX * window.innerWidth) + (Math.random() * (window.innerWidth - this.naturalWidth));
+                            const y = (gridY * window.innerHeight) + (Math.random() * (window.innerHeight - this.naturalHeight));
                             img.style.left = `${x}px`;
                             img.style.top = `${y}px`;
-                            
-                            // Set initial state based on depth
-                            if (depth === 0) {
-                                img.style.opacity = '1';
-                                img.style.filter = 'blur(0px)';
-                                img.style.transform = 'scale(0.4) translateZ(0)';
-                            } else {
-                                img.style.opacity = '0';
-                                img.style.filter = 'blur(4px)';
-                                img.style.transform = 'scale(0.4) translateZ(-400px)';
-                            }
-                            
+                            img.classList.add('loaded');
                             loadedImages++;
                             updateLoadingProgress();
                         };
                         
+                        img.dataset.depth = Math.floor(Math.random() * 6); // random depth 0–5
                         document.querySelector('.infinite-container').appendChild(img);
                     });
-                }
-            }
-
-            // Reset initial position after all images are loaded
-            function resetInitialPosition() {
-                const firstLayerImages = document.querySelectorAll('.floating-image[data-depth="0"]');
-                if (firstLayerImages.length > 0) {
-                    // Calculate center of all first layer images
-                    let totalX = 0, totalY = 0;
-                    firstLayerImages.forEach(img => {
-                        const rect = img.getBoundingClientRect();
-                        totalX += rect.left + rect.width / 2;
-                        totalY += rect.top + rect.height / 2;
-                    });
-                    
-                    const centerX = totalX / firstLayerImages.length;
-                    const centerY = totalY / firstLayerImages.length;
-                    
-                    // Calculate offset to center in viewport
-                    const viewportCenterX = window.innerWidth / 2;
-                    const viewportCenterY = window.innerHeight / 2;
-                    
-                    const offsetX = viewportCenterX - centerX;
-                    const offsetY = viewportCenterY - centerY;
-                    
-                    // Apply offset to container
-                    translateX = offsetX;
-                    translateY = offsetY;
-                    container.style.transform = `translate3d(${translateX}px, ${translateY}px, 0)`;
                 }
             }
         </script>
@@ -309,34 +253,23 @@
     scrollContainer.scrollTop = window.innerHeight;
 
     function updateImages(progress) {
-        // Continuous normalized progress loop, smooth interpolation between layers
-        const normalizedProgress = progress % totalLayers;
-        const layer = Math.floor(normalizedProgress);
-        let layerProgress = normalizedProgress % 1;
-        // Use an ease (cubic in-out) for smoother transition
-        function easeInOutCubic(t) {
-            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        }
-        const easedProgress = easeInOutCubic(layerProgress);
+        const layer = Math.floor(progress) % totalLayers;
+        const layerProgress = progress % 1;
+        
         document.querySelectorAll('.floating-image').forEach(img => {
             const depth = parseInt(img.dataset.depth);
-            // Calculate relative position in the loop, wrap around
-            let relativeDepth = depth - layer;
-            if (relativeDepth < 0) relativeDepth += totalLayers;
-            if (relativeDepth >= totalLayers) relativeDepth -= totalLayers;
-            // Layer fade: 1 at center, 0 at farthest, smooth transition
-            let fadeIn = 1 - Math.abs(easedProgress - relativeDepth);
-            fadeIn = Math.max(0, Math.min(1, fadeIn));
-            // Interpolate properties
-            const scale = 1 + 0.3 * fadeIn;
-            const blur = (1 - fadeIn) * 4;
-            const opacity = 0.3 + 0.7 * fadeIn;
-            const z = -relativeDepth * 100 + (fadeIn * 50);
+            const distance = Math.abs(depth - layer);
+            
+            // Calculate zoom and opacity based on scroll progress
+            const zoom = 1 + (layerProgress * 0.5);
+            const opacity = distance === 0 ? 1 : 0.3;
+            const blur = distance * 2;
+            
             gsap.to(img, {
                 duration: 0.6,
                 ease: 'power3.out',
-                scale: scale,
-                z: z,
+                scale: zoom * (1 - distance * 0.1),
+                z: -distance * 100,
                 opacity: opacity,
                 filter: `blur(${blur}px)`
             });
@@ -395,7 +328,10 @@
         const delta = e.deltaY * 0.001; // Adjust sensitivity
         scrollProgress += delta;
         
-        // No need for bounds checking as we're using modulo
+        // Keep progress within bounds
+        if (scrollProgress < 0) scrollProgress = 0;
+        if (scrollProgress > totalLayers) scrollProgress = totalLayers;
+        
         updateImages(scrollProgress);
     }, { passive: false });
 
