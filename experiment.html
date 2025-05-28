@@ -55,12 +55,6 @@
             pointer-events: none;
         }
 
-        .loading-text {
-            font-size: 14px;
-            color: #000;
-            margin-bottom: 10px;
-        }
-
         .loading-progress {
             width: 200px;
             height: 2px;
@@ -170,7 +164,6 @@
     <div class="loading-progress">
         <div class="loading-progress-bar"></div>
     </div>
-    <div class="loading-text">Loading</div>
 </div>
 
 <div class="inspection-overlay"></div>
@@ -193,12 +186,10 @@
             let loadedImages = 0;
             const loadingOverlay = document.querySelector('.loading-overlay');
             const loadingBar = document.querySelector('.loading-progress-bar');
-            const loadingText = document.querySelector('.loading-text');
 
             function updateLoadingProgress() {
                 const progress = (loadedImages / totalImages) * 100;
                 loadingBar.style.width = `${progress}%`;
-                loadingText.textContent = 'Loading';
 
                 if (loadedImages === totalImages) {
                     setTimeout(() => {
