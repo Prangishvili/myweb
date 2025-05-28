@@ -215,12 +215,26 @@
                             const y = (gridY * window.innerHeight) + (Math.random() * (window.innerHeight - this.naturalHeight));
                             img.style.left = `${x}px`;
                             img.style.top = `${y}px`;
-                            img.classList.add('loaded');
+                            
+                            // Set initial state based on depth
+                            const depth = Math.floor(Math.random() * 6);
+                            img.dataset.depth = depth;
+                            
+                            // Only show first layer initially
+                            if (depth === 0) {
+                                img.style.opacity = '1';
+                                img.style.filter = 'blur(0px)';
+                                img.style.transform = 'scale(0.4) translateZ(0)';
+                            } else {
+                                img.style.opacity = '0';
+                                img.style.filter = 'blur(4px)';
+                                img.style.transform = 'scale(0.4) translateZ(-400px)';
+                            }
+                            
                             loadedImages++;
                             updateLoadingProgress();
                         };
                         
-                        img.dataset.depth = Math.floor(Math.random() * 6); // random depth 0–5
                         document.querySelector('.infinite-container').appendChild(img);
                     });
                 }
@@ -253,26 +267,49 @@
     scrollContainer.scrollTop = window.innerHeight;
 
     function updateImages(progress) {
-        const layer = Math.floor(progress) % totalLayers;
+        const layer = Math.floor(progress);
         const layerProgress = progress % 1;
         
         document.querySelectorAll('.floating-image').forEach(img => {
             const depth = parseInt(img.dataset.depth);
-            const distance = Math.abs(depth - layer);
             
-            // Calculate zoom and opacity based on scroll progress
-            const zoom = 1 + (layerProgress * 0.5);
-            const opacity = distance === 0 ? 1 : 0.3;
-            const blur = distance * 2;
-            
-            gsap.to(img, {
-                duration: 0.6,
-                ease: 'power3.out',
-                scale: zoom * (1 - distance * 0.1),
-                z: -distance * 100,
-                opacity: opacity,
-                filter: `blur(${blur}px)`
-            });
+            // Only show images from current and previous layer
+            if (depth <= layer) {
+                // Calculate opacity based on layer transition
+                let opacity;
+                if (depth === layer) {
+                    // Current layer fades in
+                    opacity = layerProgress;
+                } else if (depth === layer - 1) {
+                    // Previous layer fades out
+                    opacity = 1 - layerProgress;
+                } else {
+                    // Older layers stay at full opacity
+                    opacity = 1;
+                }
+                
+                // Calculate zoom based on layer
+                const zoom = 1 + (layerProgress * 0.5);
+                const scale = zoom * (1 - (layer - depth) * 0.1);
+                
+                gsap.to(img, {
+                    duration: 0.6,
+                    ease: 'power3.out',
+                    scale: scale,
+                    z: -depth * 100,
+                    opacity: opacity,
+                    filter: `blur(${layer - depth}px)`
+                });
+            } else {
+                // Hide images from future layers
+                gsap.to(img, {
+                    duration: 0.6,
+                    ease: 'power3.out',
+                    scale: 0.4,
+                    opacity: 0,
+                    filter: 'blur(4px)'
+                });
+            }
         });
     }
 
