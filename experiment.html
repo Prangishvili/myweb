@@ -314,49 +314,47 @@
     scrollContainer.scrollTop = window.innerHeight;
 
     function updateImages(progress) {
-        const layer = Math.floor(progress);
-        const layerProgress = progress % 1;
+        // Create infinite loop effect
+        const normalizedProgress = progress % totalLayers;
+        const layer = Math.floor(normalizedProgress);
+        const layerProgress = normalizedProgress % 1;
         
         document.querySelectorAll('.floating-image').forEach(img => {
             const depth = parseInt(img.dataset.depth);
             
-            // Only show images from current and previous layer
-            if (depth <= layer) {
-                // Calculate opacity based on layer transition
-                let opacity;
-                if (depth === layer) {
-                    // Current layer fades in
-                    opacity = layerProgress;
-                } else if (depth === layer - 1) {
-                    // Previous layer fades out
-                    opacity = 1 - layerProgress;
-                } else {
-                    // Older layers stay at full opacity
-                    opacity = 1;
-                }
-                
-                // Calculate zoom based on layer
-                const zoom = 1 + (layerProgress * 0.5);
-                const scale = zoom * (1 - (layer - depth) * 0.1);
-                
-                gsap.to(img, {
-                    duration: 0.6,
-                    ease: 'power3.out',
-                    scale: scale,
-                    z: -depth * 100,
-                    opacity: opacity,
-                    filter: `blur(${layer - depth}px)`
-                });
+            // Calculate relative position in the loop
+            let relativeDepth = depth - layer;
+            if (relativeDepth < 0) relativeDepth += totalLayers;
+            
+            // Calculate opacity based on position in loop
+            let opacity;
+            if (relativeDepth === 0) {
+                // Current layer fades in
+                opacity = layerProgress;
+            } else if (relativeDepth === totalLayers - 1) {
+                // Layer about to become current fades out
+                opacity = 1 - layerProgress;
+            } else if (relativeDepth === 1) {
+                // Next layer starts fading in
+                opacity = layerProgress;
             } else {
-                // Hide images from future layers
-                gsap.to(img, {
-                    duration: 0.6,
-                    ease: 'power3.out',
-                    scale: 0.4,
-                    opacity: 0,
-                    filter: 'blur(4px)'
-                });
+                // Other layers maintain partial visibility
+                opacity = 0.3;
             }
+            
+            // Calculate zoom and blur based on position
+            const zoom = 1 + (layerProgress * 0.5);
+            const scale = zoom * (1 - relativeDepth * 0.1);
+            const blur = relativeDepth * 2;
+            
+            gsap.to(img, {
+                duration: 0.6,
+                ease: 'power3.out',
+                scale: scale,
+                z: -relativeDepth * 100,
+                opacity: opacity,
+                filter: `blur(${blur}px)`
+            });
         });
     }
 
@@ -412,10 +410,7 @@
         const delta = e.deltaY * 0.001; // Adjust sensitivity
         scrollProgress += delta;
         
-        // Keep progress within bounds
-        if (scrollProgress < 0) scrollProgress = 0;
-        if (scrollProgress > totalLayers) scrollProgress = totalLayers;
-        
+        // No need for bounds checking as we're using modulo
         updateImages(scrollProgress);
     }, { passive: false });
 
