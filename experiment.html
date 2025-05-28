@@ -217,18 +217,13 @@
                             // Calculate position
                             let x, y;
                             if (depth === 0) {
-                                // Center first layer images in viewport
-                                const centerX = window.innerWidth / 2;
-                                const centerY = window.innerHeight / 2;
-                                const offsetX = (this.naturalWidth * 0.4) / 2; // Account for scale(0.4)
-                                const offsetY = (this.naturalHeight * 0.4) / 2;
+                                // Random position within viewport for first layer
+                                const padding = 100; // Padding from viewport edges
+                                const maxX = window.innerWidth - this.naturalWidth * 0.4 - padding;
+                                const maxY = window.innerHeight - this.naturalHeight * 0.4 - padding;
                                 
-                                // Distribute first layer images around center
-                                const angle = (i % 8) * (Math.PI / 4); // 8 positions around center
-                                const radius = Math.min(window.innerWidth, window.innerHeight) * 0.3;
-                                
-                                x = centerX + Math.cos(angle) * radius - offsetX;
-                                y = centerY + Math.sin(angle) * radius - offsetY;
+                                x = padding + Math.random() * maxX;
+                                y = padding + Math.random() * maxY;
                             } else {
                                 // Random position for other layers
                                 x = (gridX * window.innerWidth) + (Math.random() * (window.innerWidth - this.naturalWidth));
