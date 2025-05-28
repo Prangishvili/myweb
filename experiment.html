@@ -128,6 +128,7 @@
             z-index: 2001;
             pointer-events: none;
             transition: all 0.3s ease-out;
+            opacity: 0;
         }
 
         .inspected-image.portrait {
@@ -138,6 +139,14 @@
         .inspected-image.landscape {
             width: 95vw;
             height: auto;
+        }
+
+        .inspected-image.fade-in {
+            opacity: 1;
+        }
+
+        .inspected-image.fade-out {
+            opacity: 0;
         }
 
         .scroll-container {
@@ -207,7 +216,114 @@
                         const img = document.createElement('img');
                         img.src = `images/image ${num}.jpg`;
                         img.className = 'floating-image';
+                        img.style.cursor = 'pointer';
+                        img.style.pointerEvents = 'auto'; // Ensure click events are captured
                         totalImages++;
+                        
+                        // Add click handler directly to each image
+                        img.addEventListener('click', function(e) {
+                            console.log('Image clicked!', {
+                                src: this.src,
+                                number: num,
+                                element: this
+                            });
+                            
+                            e.preventDefault();
+                            e.stopPropagation();
+                            
+                            if (isInspecting) {
+                                console.log('Exiting inspection mode');
+                                gsap.to(inspectedImage, {
+                                    opacity: 0,
+                                    scale: 0.4,
+                                    duration: 0.3,
+                                    ease: 'power2.in',
+                                    onComplete: () => {
+                                        overlay.style.display = 'none';
+                                        inspectedImage.style.display = 'none';
+                                        isInspecting = false;
+                                        // Reset the clicked image to its original state
+                                        if (lastClickedImage) {
+                                            gsap.to(lastClickedImage, {
+                                                opacity: 0.3,
+                                                scale: 0.4,
+                                                duration: 0.3,
+                                                ease: 'power2.out'
+                                            });
+                                            lastClickedImage = null;
+                                        }
+                                    }
+                                });
+                                return;
+                            }
+                            
+                            console.log('Entering inspection mode');
+                            isInspecting = true;
+                            lastClickedImage = this; // Store reference to clicked image
+                            overlay.style.display = 'block';
+                            
+                            // First show the processed image
+                            inspectedImage.src = this.src;
+                            inspectedImage.style.display = 'block';
+                            inspectedImage.style.opacity = '0';
+                            
+                            // Determine if image is portrait or landscape
+                            const tempImg = new Image();
+                            tempImg.onload = function() {
+                                console.log('Processed image loaded');
+                                const isPortrait = this.height > this.width;
+                                inspectedImage.className = `inspected-image ${isPortrait ? 'portrait' : 'landscape'}`;
+                                
+                                // Fade in the processed image
+                                gsap.to(inspectedImage, {
+                                    opacity: 1,
+                                    scale: 1,
+                                    duration: 0.3,
+                                    ease: 'power2.out',
+                                    onComplete: () => {
+                                        console.log('Processed image fade in complete');
+                                        // After processed image is shown, load and fade in the original
+                                        const originalImagePath = `images/original/image ${num}.jpg`;
+                                        console.log('Loading original image:', originalImagePath);
+                                        const originalImg = new Image();
+                                        
+                                        originalImg.onload = function() {
+                                            console.log('Original image loaded');
+                                            // Crossfade to original image
+                                            gsap.to(inspectedImage, {
+                                                opacity: 0,
+                                                duration: 0.3,
+                                                ease: 'power2.inOut',
+                                                onComplete: () => {
+                                                    inspectedImage.src = originalImagePath;
+                                                    gsap.to(inspectedImage, {
+                                                        opacity: 1,
+                                                        duration: 0.3,
+                                                        ease: 'power2.inOut'
+                                                    });
+                                                }
+                                            });
+                                        };
+                                        
+                                        originalImg.onerror = function() {
+                                            console.error('Failed to load original image:', originalImagePath);
+                                            // If original fails to load, keep showing the processed image
+                                            gsap.to(inspectedImage, {
+                                                opacity: 1,
+                                                duration: 0.3,
+                                                ease: 'power2.inOut'
+                                            });
+                                        };
+                                        
+                                        originalImg.src = originalImagePath;
+                                    }
+                                });
+                            };
+                            tempImg.onerror = function() {
+                                console.error('Failed to load processed image:', this.src);
+                            };
+                            tempImg.src = this.src;
+                        });
                         
                         // Load image to get its natural dimensions
                         img.onload = function() {
@@ -243,6 +359,37 @@
     const totalLayers = 6;
     let scrollProgress = 0;
     let isInspecting = false;
+    let lastClickedImage = null;
+    let dragStartTime = 0;
+    const DRAG_THRESHOLD = 5; // pixels
+    let hasMoved = false;
+
+    // Add click handler to overlay
+    overlay.addEventListener('click', function(e) {
+        if (isInspecting) {
+            console.log('Closing inspection mode via overlay click');
+            gsap.to(inspectedImage, {
+                opacity: 0,
+                scale: 0.4,
+                duration: 0.3,
+                ease: 'power2.in',
+                onComplete: () => {
+                    overlay.style.display = 'none';
+                    inspectedImage.style.display = 'none';
+                    isInspecting = false;
+                    if (lastClickedImage) {
+                        gsap.to(lastClickedImage, {
+                            opacity: 0.3,
+                            scale: 0.4,
+                            duration: 0.3,
+                            ease: 'power2.out'
+                        });
+                        lastClickedImage = null;
+                    }
+                }
+            });
+        }
+    });
 
     // Prevent default behaviors
     document.addEventListener('dragstart', (e) => e.preventDefault());
@@ -276,51 +423,6 @@
         });
     }
 
-    // Handle image inspection
-    document.addEventListener('click', (e) => {
-        if (isInspecting) {
-            // Exit inspection mode
-            overlay.style.display = 'none';
-            inspectedImage.style.display = 'none';
-            isInspecting = false;
-            return;
-        }
-
-        const clickedImage = e.target.closest('.floating-image');
-        if (clickedImage) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Enter inspection mode
-            isInspecting = true;
-            overlay.style.display = 'block';
-            inspectedImage.src = clickedImage.src;
-            inspectedImage.style.display = 'block';
-            
-            // Determine if image is portrait or landscape
-            const img = new Image();
-            img.onload = function() {
-                const isPortrait = this.height > this.width;
-                inspectedImage.className = `inspected-image ${isPortrait ? 'portrait' : 'landscape'}`;
-                
-                // Animate the image to center
-                gsap.fromTo(inspectedImage, 
-                    {
-                        scale: 0.4,
-                        opacity: 0
-                    },
-                    {
-                        scale: 1,
-                        opacity: 1,
-                        duration: 0.3,
-                        ease: 'power2.out'
-                    }
-                );
-            };
-            img.src = clickedImage.src;
-        }
-    });
-
     // Handle wheel events
     window.addEventListener('wheel', (e) => {
         if (isInspecting) return; // Disable wheel during inspection
@@ -337,9 +439,11 @@
 
     // Handle dragging
     canvas.addEventListener('mousedown', (e) => {
-        if (isInspecting) return; // Disable drag during inspection
+        if (isInspecting) return;
         e.preventDefault();
         isDragging = true;
+        hasMoved = false;
+        dragStartTime = Date.now();
         canvas.style.cursor = 'grabbing';
         startX = e.clientX;
         startY = e.clientY;
@@ -352,10 +456,14 @@
         const deltaX = e.clientX - startX;
         const deltaY = e.clientY - startY;
         
+        // Check if we've moved beyond the threshold
+        if (Math.abs(deltaX) > DRAG_THRESHOLD || Math.abs(deltaY) > DRAG_THRESHOLD) {
+            hasMoved = true;
+        }
+        
         translateX += deltaX;
         translateY += deltaY;
         
-        // Apply transform with hardware acceleration
         container.style.transform = `translate3d(${translateX}px, ${translateY}px, 0)`;
         
         startX = e.clientX;
@@ -370,9 +478,11 @@
 
     // Handle touch events
     canvas.addEventListener('touchstart', (e) => {
-        if (isInspecting) return; // Disable touch during inspection
+        if (isInspecting) return;
         e.preventDefault();
         isDragging = true;
+        hasMoved = false;
+        dragStartTime = Date.now();
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
     });
@@ -383,6 +493,11 @@
         
         const deltaX = e.touches[0].clientX - startX;
         const deltaY = e.touches[0].clientY - startY;
+        
+        // Check if we've moved beyond the threshold
+        if (Math.abs(deltaX) > DRAG_THRESHOLD || Math.abs(deltaY) > DRAG_THRESHOLD) {
+            hasMoved = true;
+        }
         
         translateX += deltaX;
         translateY += deltaY;
@@ -397,6 +512,148 @@
         e.preventDefault();
         isDragging = false;
     });
+
+    // Modify image click handler
+    for (let gridX = 0; gridX < 3; gridX++) {
+        for (let gridY = 0; gridY < 3; gridY++) {
+            imageNumbers.forEach((num, i) => {
+                const img = document.createElement('img');
+                img.src = `images/image ${num}.jpg`;
+                img.className = 'floating-image';
+                img.style.cursor = 'pointer';
+                img.style.pointerEvents = 'auto';
+                totalImages++;
+                
+                img.addEventListener('click', function(e) {
+                    // Don't trigger if we were dragging
+                    if (hasMoved) {
+                        hasMoved = false;
+                        return;
+                    }
+                    
+                    // Don't trigger if the mouse was down for too long (drag)
+                    if (Date.now() - dragStartTime > 200) {
+                        return;
+                    }
+                    
+                    console.log('Image clicked!', {
+                        src: this.src,
+                        number: num,
+                        element: this
+                    });
+                    
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    if (isInspecting) {
+                        console.log('Exiting inspection mode');
+                        gsap.to(inspectedImage, {
+                            opacity: 0,
+                            scale: 0.4,
+                            duration: 0.3,
+                            ease: 'power2.in',
+                            onComplete: () => {
+                                overlay.style.display = 'none';
+                                inspectedImage.style.display = 'none';
+                                isInspecting = false;
+                                if (lastClickedImage) {
+                                    gsap.to(lastClickedImage, {
+                                        opacity: 0.3,
+                                        scale: 0.4,
+                                        duration: 0.3,
+                                        ease: 'power2.out'
+                                    });
+                                    lastClickedImage = null;
+                                }
+                            }
+                        });
+                        return;
+                    }
+                    
+                    console.log('Entering inspection mode');
+                    isInspecting = true;
+                    lastClickedImage = this; // Store reference to clicked image
+                    overlay.style.display = 'block';
+                    
+                    // First show the processed image
+                    inspectedImage.src = this.src;
+                    inspectedImage.style.display = 'block';
+                    inspectedImage.style.opacity = '0';
+                    
+                    // Determine if image is portrait or landscape
+                    const tempImg = new Image();
+                    tempImg.onload = function() {
+                        console.log('Processed image loaded');
+                        const isPortrait = this.height > this.width;
+                        inspectedImage.className = `inspected-image ${isPortrait ? 'portrait' : 'landscape'}`;
+                        
+                        // Fade in the processed image
+                        gsap.to(inspectedImage, {
+                            opacity: 1,
+                            scale: 1,
+                            duration: 0.3,
+                            ease: 'power2.out',
+                            onComplete: () => {
+                                console.log('Processed image fade in complete');
+                                // After processed image is shown, load and fade in the original
+                                const originalImagePath = `images/original/image ${num}.jpg`;
+                                console.log('Loading original image:', originalImagePath);
+                                const originalImg = new Image();
+                                
+                                originalImg.onload = function() {
+                                    console.log('Original image loaded');
+                                    // Crossfade to original image
+                                    gsap.to(inspectedImage, {
+                                        opacity: 0,
+                                        duration: 0.3,
+                                        ease: 'power2.inOut',
+                                        onComplete: () => {
+                                            inspectedImage.src = originalImagePath;
+                                            gsap.to(inspectedImage, {
+                                                opacity: 1,
+                                                duration: 0.3,
+                                                ease: 'power2.inOut'
+                                            });
+                                        }
+                                    });
+                                };
+                                
+                                originalImg.onerror = function() {
+                                    console.error('Failed to load original image:', originalImagePath);
+                                    // If original fails to load, keep showing the processed image
+                                    gsap.to(inspectedImage, {
+                                        opacity: 1,
+                                        duration: 0.3,
+                                        ease: 'power2.inOut'
+                                    });
+                                };
+                                
+                                originalImg.src = originalImagePath;
+                            }
+                        });
+                    };
+                    tempImg.onerror = function() {
+                        console.error('Failed to load processed image:', this.src);
+                    };
+                    tempImg.src = this.src;
+                });
+                
+                // Load image to get its natural dimensions
+                img.onload = function() {
+                    const x = (gridX * window.innerWidth) + (Math.random() * (window.innerWidth - this.naturalWidth));
+                    const y = (gridY * window.innerHeight) + (Math.random() * (window.innerHeight - this.naturalHeight));
+                    img.style.left = `${x}px`;
+                    img.style.top = `${y}px`;
+                    img.classList.add('loaded');
+                    loadedImages++;
+                    updateLoadingProgress();
+                };
+                
+                img.dataset.depth = Math.floor(Math.random() * 6); // random depth 0–5
+                document.querySelector('.infinite-container').appendChild(img);
+            });
+        }
+    }
 
     // Initial update
     updateImages(0);
