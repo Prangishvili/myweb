@@ -9,8 +9,20 @@
   <link rel="apple-touch-icon" href="assets/icon.svg">
   <link rel="stylesheet" href="style.css">
   <style>
-    body {
+    html, body {
+      height: 100%;
+      min-height: 100%;
       background: #FF4313 !important;
+    }
+    body {
+      /* Remove background here, handled above */
+    }
+    main {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
     }
     .cv-container {
       display: flex;
@@ -51,23 +63,133 @@
         gap: 1.2em;
       }
     }
+    .cv-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      width: 100%;
+      margin: 40px 0 0 0;
+      box-sizing: border-box;
+      padding: 0 16px 100px 16px;
+      justify-content: center;
+    }
+    .portfolio-item {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 0;
+      background: #eee;
+    }
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    @media (max-width: 900px) {
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+        max-width: 95vw;
+      }
+    }
+    html {
+      scroll-behavior: smooth;
+    }
   </style>
 </head>
 <body>
   <main>
-    <div class="cv-container">
-      <div class="cv-bio">
-        I'm a Product Designer based in Tbilisi, Georgia, with over a decade of specialized experience in crafting human interfaces, digital products, and brand identities.
-      </div>
-      <div class="cv-exp">
-        Previously at Videoshops, Silknet, Ownic, Toptal, Geolab, Adjara Group, GMFA: Georgian Museum of Fine Arts, MRKT, Leavignstone
-      </div>
-      <div class="cv-links">
-        <a href="portfolio.html" target="_blank" rel="noopener noreferrer">Portfolio</a>
-        <a href="mailto:hello@otoprangi.com" target="_blank" rel="noopener noreferrer">hello@otoprangi.com</a>
-        <a href="#" target="_blank" rel="noopener noreferrer">Meet and discuss</a>
+    <div class="cv-section">
+      <div class="cv-container">
+        <div class="cv-bio">
+          I'm a Product Designer based in Tbilisi, Georgia, with over a decade of specialized experience in crafting human interfaces, digital products, and brand identities.
+        </div>
+        <div class="cv-exp">
+          Previously at Videoshops, Silknet, Ownic, Toptal, Geolab, Adjara Group, GMFA: Georgian Museum of Fine Arts, MRKT, Leavignstone
+        </div>
+        <div class="cv-links">
+          <a href="#portfolio-grid" class="scroll-link">Portfolio</a>
+          <a href="mailto:hello@otoprangi.com" target="_blank" rel="noopener noreferrer">hello@otoprangi.com</a>
+          <a href="#" target="_blank" rel="noopener noreferrer">Meet and discuss</a>
+        </div>
       </div>
     </div>
+    <div class="portfolio-grid" id="portfolio-grid">
+      <a href="#" class="portfolio-item"><img src="assets/frame1.png" alt="Portfolio 1"></a>
+      <a href="#" class="portfolio-item"><img src="assets/frame2.png" alt="Portfolio 2"></a>
+      <a href="#" class="portfolio-item"><img src="assets/frame3.png" alt="Portfolio 3"></a>
+      <a href="#" class="portfolio-item"><img src="assets/frame4.png" alt="Portfolio 4"></a>
+    </div>
   </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Smooth scroll for Portfolio link
+      document.querySelectorAll('.scroll-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = document.getElementById('portfolio-grid');
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      // Background color transition on scroll
+      function hexToRgb(hex) {
+        hex = hex.replace('#', '');
+        if (hex.length === 3) {
+          hex = hex.split('').map(x => x + x).join('');
+        }
+        const num = parseInt(hex, 16);
+        return [num >> 16, (num >> 8) & 255, num & 255];
+      }
+      function rgbToHex(r, g, b) {
+        return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+      }
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+      function lerpColor(color1, color2, t) {
+        const rgb1 = hexToRgb(color1);
+        const rgb2 = hexToRgb(color2);
+        return rgbToHex(
+          Math.round(lerp(rgb1[0], rgb2[0], t)),
+          Math.round(lerp(rgb1[1], rgb2[1], t)),
+          Math.round(lerp(rgb1[2], rgb2[2], t))
+        );
+      }
+      const startColor = '#FF4313';
+      const endColor = '#000000';
+      const grid = document.getElementById('portfolio-grid');
+      if (!grid) {
+        console.log('portfolio-grid element not found');
+        return;
+      }
+      window.addEventListener('scroll', function() {
+        const gridTop = grid.getBoundingClientRect().top + window.scrollY;
+        const windowHeight = window.innerHeight;
+        const scrollY = window.scrollY;
+        // Start transition 200px before grid, finish when grid is at top
+        const startTransition = gridTop - windowHeight + 100;
+        const endTransition = gridTop;
+        let t = (scrollY - startTransition) / (endTransition - startTransition);
+        t = Math.max(0, Math.min(1, t));
+        const color = lerpColor(startColor, endColor, t);
+        document.body.style.background = color;
+        document.documentElement.style.background = color;
+      });
+      // Set initial color
+      document.body.style.background = startColor;
+      document.documentElement.style.background = startColor;
+    });
+  </script>
 </body>
 </html> 
