@@ -309,44 +309,34 @@
     scrollContainer.scrollTop = window.innerHeight;
 
     function updateImages(progress) {
-        // Create infinite loop effect
+        // Continuous normalized progress loop, smooth interpolation between layers
         const normalizedProgress = progress % totalLayers;
         const layer = Math.floor(normalizedProgress);
-        const layerProgress = normalizedProgress % 1;
-        
+        let layerProgress = normalizedProgress % 1;
+        // Use an ease (cubic in-out) for smoother transition
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+        const easedProgress = easeInOutCubic(layerProgress);
         document.querySelectorAll('.floating-image').forEach(img => {
             const depth = parseInt(img.dataset.depth);
-            
-            // Calculate relative position in the loop
+            // Calculate relative position in the loop, wrap around
             let relativeDepth = depth - layer;
             if (relativeDepth < 0) relativeDepth += totalLayers;
-            
-            // Calculate opacity based on position in loop
-            let opacity;
-            if (relativeDepth === 0) {
-                // Current layer fades in
-                opacity = layerProgress;
-            } else if (relativeDepth === totalLayers - 1) {
-                // Layer about to become current fades out
-                opacity = 1 - layerProgress;
-            } else if (relativeDepth === 1) {
-                // Next layer starts fading in
-                opacity = layerProgress;
-            } else {
-                // Other layers maintain partial visibility
-                opacity = 0.3;
-            }
-            
-            // Calculate zoom and blur based on position
-            const zoom = 1 + (layerProgress * 0.5);
-            const scale = zoom * (1 - relativeDepth * 0.1);
-            const blur = relativeDepth * 2;
-            
+            if (relativeDepth >= totalLayers) relativeDepth -= totalLayers;
+            // Layer fade: 1 at center, 0 at farthest, smooth transition
+            let fadeIn = 1 - Math.abs(easedProgress - relativeDepth);
+            fadeIn = Math.max(0, Math.min(1, fadeIn));
+            // Interpolate properties
+            const scale = 1 + 0.3 * fadeIn;
+            const blur = (1 - fadeIn) * 4;
+            const opacity = 0.3 + 0.7 * fadeIn;
+            const z = -relativeDepth * 100 + (fadeIn * 50);
             gsap.to(img, {
                 duration: 0.6,
                 ease: 'power3.out',
                 scale: scale,
-                z: -relativeDepth * 100,
+                z: z,
                 opacity: opacity,
                 filter: `blur(${blur}px)`
             });
