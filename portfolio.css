@@ -3,9 +3,9 @@ body, html {
     padding: 0;
     height: 100vh;
     width: 100vw;
-    background-color: #FF4313;
+    background-color: #ffffff;
     font-family: 'Poppins', sans-serif;
-    color: #ffffff;
+    color: #000000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,7 +40,7 @@ body, html {
 #password-input {
     padding: 0.5rem;
     background-color: var(--primary-color);
-    color: #ffffff;
+    color: #000000;
     width: auto;
     min-width: 100px;
     text-align: center;
@@ -52,25 +52,25 @@ body, html {
 }
 
 #password-input::placeholder {
-    color: #ffffff;
+    color: #000000;
     text-align: center;
     font-size: 28px;
-    opacity: 0.7;
+    opacity: 1;
     transition: opacity 0.3s ease;
     font-family: 'Poppins', sans-serif;
 }
 
 #password-input:focus {
-    color: #ffffff;
+    color: #000000;
     background-color: var(--primary-color);
 }
 
 #password-input:focus::placeholder {
-    opacity: 0.3;
+    opacity: 1;
 }
 
 .feedback {
-    color: #ffffff;
+    color: #000000;
     margin-top: 0.5rem;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -84,7 +84,7 @@ body, html {
 }
 
 .success {
-    color: #ffffff;
+    color: #000000;
     font-size: 16px;
     font-weight: 500;
     font-family: 'Poppins', sans-serif;
