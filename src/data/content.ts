@@ -5,10 +5,6 @@ export const site = {
   previously:
     "Previously at Videoshops, Silknet, Ownic, Toptal, Geolab, Adjara Group, GMFA: Georgian Museum of Fine Arts, MRKT, Leavignstone",
   links: [
-    {
-      label: "Portfolio",
-      href: "https://drive.google.com/file/d/1RIUUNGkx4JKaOOdmLPf0Aehaw1dKTagh/view",
-    },
     { label: "hello@otoprangi.com", href: "mailto:hello@otoprangi.com" },
     { label: "Meet and discuss", href: "https://calendar.app.google/WJVjHi1QGweHhdqeA" },
   ],
