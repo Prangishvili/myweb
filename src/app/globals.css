@@ -5,6 +5,10 @@
   --font-serif: var(--font-poppins);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-inter), Arial, Helvetica, sans-serif;
 }

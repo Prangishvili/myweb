@@ -3,6 +3,7 @@ import { site } from "@/data/content";
 
 const nav = [
   { href: "/#work", label: "Work" },
+  { href: "/work/motion-works", label: "Motion Works" },
   { href: "/#about", label: "About" },
   { href: "/#contact", label: "Contact" },
 ];
