@@ -14,9 +14,23 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://otoprangi.com"),
   title: "Oto Prangi",
   description:
     "Product Designer based in Tbilisi, Georgia, crafting human interfaces, digital products, and brand identities.",
+  openGraph: {
+    title: "Oto Prangi",
+    description:
+      "Product Designer based in Tbilisi, Georgia, crafting human interfaces, digital products, and brand identities.",
+    images: ["/og-image.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Oto Prangi",
+    description:
+      "Product Designer based in Tbilisi, Georgia, crafting human interfaces, digital products, and brand identities.",
+    images: ["/og-image.jpg"],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
