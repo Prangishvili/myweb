@@ -4,7 +4,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="flex max-w-[1007px] flex-col gap-6 px-6 pb-24 pt-40 font-serif text-2xl sm:gap-12 sm:px-10 sm:pt-56 sm:text-[32px]"
+      className="flex max-w-[1007px] flex-col gap-6 px-6 pb-24 pt-40 font-serif text-lg sm:gap-12 sm:px-10 sm:pt-56 sm:text-2xl"
     >
       <p className="max-w-[941px] leading-[1.7]">{site.bio}</p>
       <p className="leading-[1.6]">{site.previously}</p>
