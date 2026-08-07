@@ -10,11 +10,7 @@ const nav = [
 export default function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex items-start justify-between px-3 py-3 font-sans text-[15px] leading-[25px] font-medium sm:px-10 sm:py-6">
-      <Link href="/">
-        {site.name}
-        <br />
-        {site.role}
-      </Link>
+      <Link href="/">{site.name}</Link>
       <ul className="flex gap-3 sm:gap-16">
         {nav.map((item) => (
           <li key={item.href}>
