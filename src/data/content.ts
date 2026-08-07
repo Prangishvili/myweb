@@ -1,7 +1,7 @@
 export const site = {
   name: "Oto Prangi",
   role: "Senior Product Designer",
-  bio: "Senior Product Designer based in Tbilisi, Georgia, with over a decade of specialized experience in crafting human interfaces, digital products, and brand identities.",
+  bio: "Senior Product Designer based in Tbilisi, Georgia, with over a decade of specialized experience in crafting human interfaces, scalable design systems, and end-to-end user experiences for complex digital products.",
   previously:
     "Previously at Videoshops, Silknet, Ownic, Toptal, Geolab, Adjara Group, GMFA: Georgian Museum of Fine Arts, MRKT, Leavignstone",
   links: [
