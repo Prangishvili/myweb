@@ -9,13 +9,13 @@ const nav = [
 
 export default function Header() {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 flex items-start justify-between px-6 py-6 font-sans text-[15px] leading-[25px] font-medium sm:px-10">
+    <header className="fixed inset-x-0 top-0 z-50 flex items-start justify-between px-3 py-3 font-sans text-[15px] leading-[25px] font-medium sm:px-10 sm:py-6">
       <Link href="/">
         {site.name}
         <br />
         {site.role}
       </Link>
-      <ul className="flex gap-6 sm:gap-16">
+      <ul className="flex gap-3 sm:gap-16">
         {nav.map((item) => (
           <li key={item.href}>
             <Link href={item.href} className="hover:opacity-60">

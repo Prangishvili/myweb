@@ -36,16 +36,16 @@ export default function CaseStudy({
 
   return (
     <>
-      <div className="px-4 pt-24 sm:px-5 sm:pt-28">
+      <div className="px-2 pt-12 sm:px-5 sm:pt-28">
         <Frame image={hero} />
       </div>
-      <p className="mx-auto max-w-[1300px] px-6 py-12 text-lg leading-[1.7] sm:px-10 sm:text-2xl sm:leading-[1.65]">
+      <p className="mx-auto max-w-[1300px] px-3 py-6 text-lg leading-[1.7] sm:px-10 sm:py-12 sm:text-2xl sm:leading-[1.65]">
         {description}
       </p>
-      <div className="flex flex-col gap-5 px-4 pb-20 sm:px-5">
+      <div className="flex flex-col gap-2.5 px-2 pb-10 sm:gap-5 sm:px-5 sm:pb-20">
         {rows.map((row) =>
           row.length === 2 ? (
-            <div key={row[0].src} className="flex flex-col gap-5 sm:flex-row">
+            <div key={row[0].src} className="flex flex-col gap-2.5 sm:flex-row sm:gap-5">
               {row.map((image) => (
                 <div key={image.src} className="w-full">
                   <Frame image={image} />

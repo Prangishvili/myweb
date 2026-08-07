@@ -4,7 +4,7 @@ import { work } from "@/data/content";
 
 export default function Work() {
   return (
-    <section id="work" className="grid grid-cols-1 gap-5 px-5 pb-5 sm:grid-cols-2">
+    <section id="work" className="grid grid-cols-1 gap-2.5 px-2.5 pb-2.5 sm:grid-cols-2 sm:gap-5 sm:px-5 sm:pb-5">
       {work.map((item) => {
         const tile = (
           <div className="group relative aspect-square overflow-hidden bg-black">

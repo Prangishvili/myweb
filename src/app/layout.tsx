@@ -14,7 +14,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Oto Prangi — Senior Product Designer",
+  title: "Oto Prangi",
   description:
     "Product Designer based in Tbilisi, Georgia, crafting human interfaces, digital products, and brand identities.",
 };
