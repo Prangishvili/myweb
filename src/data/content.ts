@@ -46,7 +46,7 @@ export const work: WorkItem[] = [
   },
   {
     title: "Shuko",
-    image: "/work/shuko/cover.png",
+    image: "/work/shuko/cover.jpg",
     hoverImages: [
       "/work/shuko/06-logo.jpg",
       "/work/shuko/01-cup.jpg",
@@ -58,13 +58,13 @@ export const work: WorkItem[] = [
     ],
     href: "/work/shuko",
   },
-  { title: "Fitness", image: "/work/fitness/cover.png" },
+  { title: "Fitness", image: "/work/fitness/cover.jpg" },
   {
     title: "Inspiration",
     video: "/work/inspiration/cover.m4v",
     href: "/work/inspiration",
   },
-  { title: "AISI", image: "/work/aisi/cover.png" },
+  { title: "AISI", image: "/work/aisi/cover.jpg" },
   {
     title: "Silk",
     image: "/work/silk/01-monitor.jpg",
