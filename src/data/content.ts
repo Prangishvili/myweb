@@ -1,14 +1,44 @@
 export const site = {
   name: "Oto Prangi",
-  role: "Senior Product Designer",
-  bio: "Senior Product Designer based in Tbilisi, Georgia, with over a decade of specialized experience in crafting human interfaces, scalable design systems, and end-to-end user experiences for complex digital products.",
-  previously:
-    "Previously at Videoshops, Silknet, Ownic, Toptal, Geolab, Adjara Group, GMFA: Georgian Museum of Fine Arts, MRKT, Leavignstone",
+  bio: "Oto Prangi is a Tbilisi-based Senior Product Designer with over a decade of specialized experience in crafting human interfaces, scalable design systems, and end-to-end user experiences for complex digital products. Previously at Videoshops, Silknet, Toptal, Geolab, Adjara Group, Georgian Museum of Fine Arts, MRKT, Leavignstone",
   links: [
+    { label: "+995 593 26 11 77", href: "tel:+995593261177" },
     { label: "hello@otoprangi.com", href: "mailto:hello@otoprangi.com" },
-    { label: "Schedule a Call", href: "https://calendar.app.google/WJVjHi1QGweHhdqeA" },
   ],
 };
+
+export const cv: { heading: string; items: string[] }[] = [
+  {
+    heading: "Education",
+    items: ["2017–2021 B.A. Visual and Performing Arts, Georgian Institute of Public Affairs"],
+  },
+  {
+    heading: "Experience",
+    items: [
+      "2026 Inspiration, Digital Product Designer, New York, United States",
+      "2025 Videoshops, Digital Product Designer, New York, United States",
+      "2020 Adjarabet, Product Designer, Tbilisi, Georgia",
+      "2019 Toptal, Digital Product Designer, International",
+      "2019 MRKT.COM, Product Designer",
+      "2013 Leavingstone, UI/UX Designer & Graphic Designer, Tbilisi, Georgia",
+    ],
+  },
+  {
+    heading: "Teaching",
+    items: [
+      "2026 Free University of Tbilisi, UI/UX and Motion Design Lecturer",
+      "2015 GeoLab, UI/UX Design Lecturer, Tbilisi, Georgia",
+    ],
+  },
+  {
+    heading: "Recognition",
+    items: ["2019 Awwwards, Site of the Day"],
+  },
+  {
+    heading: "Selected Clients & Projects",
+    items: ["Silknet, Adjara Group, Georgian Museum of Fine Arts"],
+  },
+];
 
 export const showreel: string[] = [
   "/work/showreel/earth-observation.mp4",
@@ -59,6 +89,7 @@ export const work: WorkItem[] = [
     href: "/work/shuko",
   },
   { title: "Fitness", image: "/work/fitness/cover.jpg" },
+  { title: "Tomorrow's Spaces", image: "/work/tomorrow/cover.jpg" },
   {
     title: "Inspiration",
     video: "/work/inspiration/cover.m4v",

@@ -4,24 +4,27 @@ export default function About() {
   return (
     <section
       id="about"
-      className="flex max-w-[1007px] flex-col gap-6 px-6 pb-24 pt-24 font-serif text-2xl sm:gap-12 sm:px-10 sm:pt-28 sm:text-[32px]"
+      className="flex flex-col gap-6 pb-24 pt-24 font-serif text-2xl font-semibold sm:gap-12 sm:pt-28 sm:text-[48px] m-[0.5rem]"
     >
-      <p className="max-w-[750px] leading-[1.7]">{site.bio}</p>
-      <p className="max-w-[745px] leading-[1.6]">{site.previously}</p>
-      <ul id="contact" className="flex flex-col gap-3 font-sans text-base font-normal sm:gap-6">
-        {site.links.map((link) => (
-          <li key={link.label}>
-            <a
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline decoration-from-font underline-offset-4 hover:opacity-60"
-            >
-              {link.label}
-            </a>
-          </li>
-        ))}
-      </ul>
+      <p className="leading-[1.5] sm:leading-[54px]">{site.bio}</p>
+      <p id="contact" className="leading-[1.5] sm:leading-[54px]">
+        {site.links.map((link, i) => {
+          const external = link.href.startsWith("http");
+          return (
+            <span key={link.label}>
+              <a
+                href={link.href}
+                target={external ? "_blank" : undefined}
+                rel={external ? "noopener noreferrer" : undefined}
+                className="hover:opacity-60"
+              >
+                {link.label}
+              </a>
+              {i < site.links.length - 1 && <span>, </span>}
+            </span>
+          );
+        })}
+      </p>
     </section>
   );
 }

@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import { Poppins, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+const switzer = localFont({
+  variable: "--font-switzer",
+  src: [
+    { path: "../fonts/switzer/Switzer-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/switzer/Switzer-Semibold.woff2", weight: "600", style: "normal" },
+    { path: "../fonts/switzer/Switzer-Bold.woff2", weight: "700", style: "normal" },
+  ],
 });
 
 export const metadata: Metadata = {
@@ -35,7 +33,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${poppins.variable} ${inter.variable} h-full antialiased`}>
+    <html lang="en" className={`${switzer.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-black">{children}</body>
     </html>
   );

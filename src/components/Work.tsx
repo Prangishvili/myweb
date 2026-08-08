@@ -7,7 +7,7 @@ export default function Work() {
   return (
     <section
       id="work"
-      className="grid scroll-mt-28 grid-cols-1 gap-2.5 px-2.5 pb-2.5 sm:grid-cols-2 sm:gap-5 sm:px-5 sm:pb-5 sm:scroll-mt-36"
+      className="grid scroll-mt-28 grid-cols-1 gap-[0.5rem] sm:grid-cols-2 sm:scroll-mt-36 mx-[0.5rem] mb-24"
     >
       {work.map((item) => {
         const tile = (
