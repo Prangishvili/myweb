@@ -4,6 +4,8 @@ import Hero from "@/components/Hero";
 import MotionWorksGrid from "@/components/MotionWorksGrid";
 import { showreel } from "@/data/content";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Motion Works — Oto Prangi | Motion Design & Animation",
   description:
