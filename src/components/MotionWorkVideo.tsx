@@ -1,11 +1,26 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
-export default function MotionWorkVideo({ src }: { src: string }) {
+export default function MotionWorkVideo({
+  src,
+  index,
+  autoOpen = false,
+}: {
+  src: string;
+  index: number;
+  autoOpen?: boolean;
+}) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const fullscreenVideoRef = useRef<HTMLVideoElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (autoOpen) {
+      setIsFullscreen(true);
+    }
+  }, [autoOpen]);
 
   const handleClick = () => {
     setIsFullscreen(true);
@@ -21,6 +36,31 @@ export default function MotionWorkVideo({ src }: { src: string }) {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Escape") {
       handleCloseFullscreen();
+    }
+  };
+
+  const handleShareLink = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const url = `${window.location.origin}/work/motion-works?video=${index}`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Motion Works",
+          text: "Check out this motion work",
+          url: url,
+        });
+      } catch (err) {
+        console.error("Failed to share:", err);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(url);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error("Failed to copy link:", err);
+      }
     }
   };
 
@@ -45,6 +85,12 @@ export default function MotionWorkVideo({ src }: { src: string }) {
           onKeyDown={handleKeyDown}
           tabIndex={0}
         >
+          <button
+            onClick={handleShareLink}
+            className="absolute top-6 right-6 text-white px-4 py-2 rounded text-sm font-semibold hover:opacity-60 z-50"
+          >
+            {copied ? "Copied!" : "Share"}
+          </button>
           <video
             ref={fullscreenVideoRef}
             src={src}
@@ -53,7 +99,6 @@ export default function MotionWorkVideo({ src }: { src: string }) {
             loop
             playsInline
             className="max-w-full max-h-full object-contain"
-            onClick={(e) => e.stopPropagation()}
           />
         </div>
       )}
