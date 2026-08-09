@@ -54,12 +54,9 @@ export default function Header() {
           className="fixed inset-0 z-40 overflow-y-auto bg-[rgba(217,217,217,0.18)] px-6 pt-24 pb-16 backdrop-blur-[184px] sm:px-10 sm:pt-28"
           onClick={() => setInfoOpen(false)}
         >
-          <div
-            className="flex flex-col gap-6 font-serif text-2xl leading-[1.3] font-semibold sm:gap-10 sm:text-[48px]"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="flex flex-col gap-6 font-serif text-2xl leading-[1.3] font-semibold sm:gap-10 sm:text-[48px]">
             {cv.map((section) => (
-              <p key={section.heading}>
+              <p key={section.heading} onClick={(e) => e.stopPropagation()}>
                 {section.heading.toUpperCase()}
                 <br />
                 {section.items.map((item, i) => (
