@@ -19,7 +19,7 @@ export default function ShuffleImage({
     if (!hovering) return;
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % images.length);
-    }, 500);
+    }, 1500);
     return () => clearInterval(id);
   }, [hovering, images.length]);
 
@@ -27,7 +27,6 @@ export default function ShuffleImage({
 
   return (
     <Image
-      key={src}
       src={src}
       alt={alt}
       fill

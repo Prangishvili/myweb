@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
+import ProjectSlider from "@/components/ProjectSlider";
 
 export const metadata: Metadata = {
   title: "Inspiration — Oto Prangi",
@@ -28,6 +29,7 @@ export default function InspirationPage() {
             className="aspect-[1920/1200] w-full object-cover"
           />
         </div>
+        <ProjectSlider currentProjectTitle="Inspiration" />
       </main>
     </>
   );

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /.next/
+Sitemap: https://otoprangi.com/sitemap.xml

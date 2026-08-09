@@ -12,8 +12,8 @@ export default function ShukoPage() {
   return (
     <>
       <Header />
-      <main className="flex-1">
-        <CaseStudy description={shuko.description} hero={shuko.hero} images={shuko.images} />
+      <main className="flex-1 pb-20">
+        <CaseStudy description={shuko.description} hero={shuko.hero} images={shuko.images} projectTitle={shuko.title} />
       </main>
     </>
   );

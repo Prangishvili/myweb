@@ -4,7 +4,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { site, cv } from "@/data/content";
 
-const navItems = ["Works", "Exhibition", "Motion"];
+const navItems = [
+  { label: "Works", href: "/work" },
+  { label: "Exhibition", href: "https://reply.gallery", external: true },
+  { label: "Motion", href: "/work/motion-works" },
+];
 
 export default function Header() {
   const [infoOpen, setInfoOpen] = useState(false);
@@ -20,14 +24,22 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 grid grid-cols-12 items-start font-sans text-[15px] leading-[25px] font-semibold m-[0.5rem] gap-[1rem]">
+      <header className="fixed inset-x-0 top-0 z-50 grid grid-cols-12 items-start font-sans text-[15px] leading-[25px] font-semibold mt-[0.5rem] mx-[0.7rem] mb-[0.7rem] gap-[1rem]">
         <Link href="/" onClick={() => setInfoOpen(false)} className="col-span-1 whitespace-nowrap">
           {site.name}
         </Link>
         <div className="col-start-4 col-span-5">
           {navItems.map((item, i) => (
-            <span key={item}>
-              {item}
+            <span key={item.label}>
+              {item.external ? (
+                <a href={item.href} target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
+                  {item.label}
+                </a>
+              ) : (
+                <Link href={item.href} onClick={() => setInfoOpen(false)} className="hover:opacity-60">
+                  {item.label}
+                </Link>
+              )}
               {i < navItems.length - 1 && <span>, </span>}
             </span>
           ))}

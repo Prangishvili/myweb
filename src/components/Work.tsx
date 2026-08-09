@@ -10,7 +10,7 @@ export default function Work() {
       className="grid scroll-mt-28 grid-cols-1 gap-[0.5rem] sm:grid-cols-2 sm:scroll-mt-36 mx-[0.5rem] mb-24"
     >
       {work.map((item) => {
-        const tile = (
+        const cover = (
           <div
             className="group relative aspect-square overflow-hidden"
             style={{ backgroundColor: item.bg ?? "#000" }}
@@ -38,12 +38,19 @@ export default function Work() {
           </div>
         );
 
-        return item.href ? (
+        const tile = item.href ? (
           <Link key={item.title} href={item.href}>
-            {tile}
+            {cover}
           </Link>
         ) : (
-          <div key={item.title}>{tile}</div>
+          <div key={item.title}>{cover}</div>
+        );
+
+        return (
+          <div key={item.title}>
+            {tile}
+            <p className="text-sm font-semibold mt-2 mb-4">{item.title}</p>
+          </div>
         );
       })}
     </section>

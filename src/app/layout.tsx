@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import SchemaMarkup from "@/components/SchemaMarkup";
 import "./globals.css";
 
 const switzer = localFont({
@@ -13,20 +14,22 @@ const switzer = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://otoprangi.com"),
-  title: "Oto Prangi",
+  title: "Oto Prangi — Senior Product Designer & Design Systems Expert",
   description:
-    "Product Designer based in Tbilisi, Georgia, crafting human interfaces, digital products, and brand identities.",
+    "Senior Product Designer with 15+ years crafting user interfaces, design systems, and digital products. Specializing in product design, creative direction, and human-centered experiences.",
+  keywords: ["Product Designer", "UI/UX Designer", "Design Systems", "Digital Products", "Tbilisi"],
   openGraph: {
-    title: "Oto Prangi",
+    title: "Oto Prangi — Senior Product Designer",
     description:
-      "Product Designer based in Tbilisi, Georgia, crafting human interfaces, digital products, and brand identities.",
+      "Senior Product Designer with 15+ years of experience in creating digital products and design systems.",
     images: ["/og-image.jpg"],
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Oto Prangi",
+    title: "Oto Prangi — Senior Product Designer",
     description:
-      "Product Designer based in Tbilisi, Georgia, crafting human interfaces, digital products, and brand identities.",
+      "Senior Product Designer with 15+ years of experience in creating digital products and design systems.",
     images: ["/og-image.jpg"],
   },
 };
@@ -34,6 +37,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${switzer.variable} h-full antialiased`}>
+      <head>
+        <SchemaMarkup />
+      </head>
       <body className="min-h-full flex flex-col bg-white text-black">{children}</body>
     </html>
   );

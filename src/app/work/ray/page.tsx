@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import CaseStudy from "@/components/CaseStudy";
-import { silk } from "@/data/silk";
+import { ray } from "@/data/ray";
 
 export const metadata: Metadata = {
-  title: `${silk.title} — Oto Prangi`,
-  description: silk.description,
+  title: `${ray.title} — Oto Prangi`,
+  description: ray.description,
 };
 
-export default function SilkPage() {
+export default function RayPage() {
   return (
     <>
       <Header />
       <main className="flex-1 pb-20">
-        <CaseStudy description={silk.description} hero={silk.hero} images={silk.images} projectTitle={silk.title} />
+        <CaseStudy description={ray.description} hero={ray.hero} images={ray.images} projectTitle={ray.title} />
       </main>
     </>
   );

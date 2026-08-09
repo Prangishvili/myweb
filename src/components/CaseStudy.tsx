@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { CaseStudyImage } from "@/data/silk";
+import ProjectSlider from "@/components/ProjectSlider";
 
 function Frame({ image }: { image: CaseStudyImage }) {
   return (
@@ -19,10 +20,12 @@ export default function CaseStudy({
   description,
   hero,
   images,
+  projectTitle,
 }: {
   description: string;
   hero: CaseStudyImage;
   images: CaseStudyImage[];
+  projectTitle?: string;
 }) {
   const rows: CaseStudyImage[][] = [];
   for (let i = 0; i < images.length; i++) {
@@ -57,6 +60,7 @@ export default function CaseStudy({
           ),
         )}
       </div>
+      {projectTitle && <ProjectSlider currentProjectTitle={projectTitle} />}
     </>
   );
 }

@@ -1,6 +1,6 @@
 export const site = {
   name: "Oto Prangi",
-  bio: "Oto Prangi is a Tbilisi-based Senior Product Designer with over a decade of specialized experience in crafting human interfaces, scalable design systems, and end-to-end user experiences for complex digital products. Previously at Videoshops, Silknet, Toptal, Geolab, Adjara Group, Georgian Museum of Fine Arts, MRKT, Leavignstone",
+  bio: "I work as a Senior Product Designer with local and international teams, offering creative direction, user experiences, and interface design with over fifteen years of knowledge in building digital products.",
   links: [
     { label: "+995 593 26 11 77", href: "tel:+995593261177" },
     { label: "hello@otoprangi.com", href: "mailto:hello@otoprangi.com" },
@@ -75,6 +75,11 @@ export const work: WorkItem[] = [
     href: "/work/motion-works",
   },
   {
+    title: "Inspiration",
+    video: "/work/inspiration/cover.m4v",
+    href: "/work/inspiration",
+  },
+  {
     title: "Shuko",
     image: "/work/shuko/cover.jpg",
     hoverImages: [
@@ -88,13 +93,24 @@ export const work: WorkItem[] = [
     ],
     href: "/work/shuko",
   },
-  { title: "Fitness", image: "/work/fitness/cover.jpg" },
-  { title: "Tomorrow's Spaces", image: "/work/tomorrow/cover.jpg" },
   {
-    title: "Inspiration",
-    video: "/work/inspiration/cover.m4v",
-    href: "/work/inspiration",
+    title: "Ray",
+    image: "/work/ray/cover.jpg",
+    hoverImages: [
+      "/work/ray/Frame 238.jpg",
+      "/work/ray/Frame 239.jpg",
+      "/work/ray/Frame 249.jpg",
+      "/work/ray/Frame 250.jpg",
+      "/work/ray/Frame 261.jpg",
+      "/work/ray/Frame 262.jpg",
+      "/work/ray/Frame 266.jpg",
+      "/work/ray/Frame 274.jpg",
+      "/work/ray/Frame 275.jpg",
+      "/work/ray/Rez.jpg",
+    ],
+    href: "/work/ray",
   },
+  { title: "Tomorrow's Spaces", image: "/work/tomorrow/cover.jpg" },
   { title: "AISI", image: "/work/aisi/cover.jpg" },
   {
     title: "Silk",
