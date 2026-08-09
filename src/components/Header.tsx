@@ -24,11 +24,11 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 grid grid-cols-12 items-start font-sans text-[15px] leading-[25px] font-semibold mt-[0.5rem] mx-[0.7rem] mb-[0.7rem] gap-[0.5rem] sm:gap-[1rem]">
-        <Link href="/" onClick={() => setInfoOpen(false)} className="col-span-3 whitespace-nowrap sm:col-span-1 text-sm sm:text-base">
+      <header className="fixed inset-x-0 top-0 z-50 grid grid-cols-12 items-start font-sans text-[15px] leading-[25px] font-semibold mt-[0.5rem] mx-[0.7rem] mb-[0.7rem] gap-[0.25rem] sm:gap-[1rem]">
+        <Link href="/" onClick={() => setInfoOpen(false)} className="col-span-2 whitespace-nowrap sm:col-span-1">
           {site.name}
         </Link>
-        <div className="col-span-7 sm:col-start-4 sm:col-span-5 whitespace-nowrap overflow-hidden text-xs sm:text-base">
+        <div className="col-span-8 sm:col-start-4 sm:col-span-5 whitespace-nowrap overflow-hidden">
           {navItems.map((item, i) => (
             <span key={item.label}>
               {item.external ? (
@@ -44,7 +44,7 @@ export default function Header() {
             </span>
           ))}
         </div>
-        <button type="button" onClick={() => setInfoOpen((open) => !open)} className="col-span-2 sm:col-span-1 sm:ml-auto hover:opacity-60 text-right sm:text-left text-xs sm:text-base">
+        <button type="button" onClick={() => setInfoOpen((open) => !open)} className="col-span-2 sm:col-span-1 sm:ml-auto hover:opacity-60 text-right sm:text-left">
           Information
         </button>
       </header>
