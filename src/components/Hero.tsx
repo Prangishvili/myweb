@@ -26,7 +26,7 @@ export default function Hero() {
         autoPlay
         muted
         playsInline
-        className="size-full object-contain"
+        className="size-full object-cover"
         onEnded={() => setIndex((i) => (i + 1) % showreel.length)}
       >
         <source src={showreel[index]} type="video/mp4" />

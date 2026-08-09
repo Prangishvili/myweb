@@ -80,6 +80,10 @@ export const work: WorkItem[] = [
     href: "/work/inspiration",
   },
   {
+    title: "Kao",
+    video: "/work/kao/cover.mp4",
+  },
+  {
     title: "Shuko",
     image: "/work/shuko/cover.jpg",
     hoverImages: [
@@ -92,6 +96,22 @@ export const work: WorkItem[] = [
       "/work/shuko/08-pattern.jpg",
     ],
     href: "/work/shuko",
+  },
+  {
+    title: "Silk",
+    image: "/work/silk/01-monitor.jpg",
+    hoverImages: [
+      "/work/silk/02-cards.png",
+      "/work/silk/03-phone-hand.jpg",
+      "/work/silk/04-billboard.jpg",
+      "/work/silk/05-tablet.jpg",
+      "/work/silk/06a-green.jpg",
+      "/work/silk/06b-yellow.jpg",
+      "/work/silk/07-closeup.jpg",
+      "/work/silk/08-storefront.jpg",
+      "/work/silk/09-dashboard.png",
+    ],
+    href: "/work/silk",
   },
   {
     title: "Ray",
@@ -110,11 +130,30 @@ export const work: WorkItem[] = [
     ],
     href: "/work/ray",
   },
-  { title: "Tomorrow's Spaces", image: "/work/tomorrow/cover.jpg" },
-  { title: "AISI", image: "/work/aisi/cover.jpg" },
   {
-    title: "Silk",
-    image: "/work/silk/01-monitor.jpg",
-    href: "/work/silk",
+    title: "Tomorrow's Spaces",
+    image: "/work/tomorrow/cover.jpg",
+    hoverImages: [
+      "/work/tomorrow/Frame 225.jpg",
+      "/work/tomorrow/Frame 228.jpg",
+      "/work/tomorrow/Frame 230.jpg",
+      "/work/tomorrow/Frame 233.jpg",
+      "/work/tomorrow/Frame 234.jpg",
+      "/work/tomorrow/Frame 237.jpg",
+    ],
+    href: "/work/tomorrow",
+  },
+  {
+    title: "AISI",
+    image: "/work/aisi/cover.jpg",
+    hoverImages: [
+      "/work/aisi/Frame 35.jpg",
+      "/work/aisi/Frame 41.png",
+      "/work/aisi/Frame 156.png",
+      "/work/aisi/Frame 175.png",
+      "/work/aisi/Frame 190.png",
+      "/work/aisi/Frame 253.jpg",
+    ],
+    href: "/work/aisi",
   },
 ];
