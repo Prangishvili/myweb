@@ -1,6 +1,8 @@
 import Image from "next/image";
 import type { CaseStudyImage } from "@/data/silk";
 import ProjectSlider from "@/components/ProjectSlider";
+import VideoScrollSlider from "@/components/VideoScrollSlider";
+import SmoothScroll from "@/components/SmoothScroll";
 
 function Frame({ image }: { image: CaseStudyImage }) {
   return (
@@ -16,13 +18,67 @@ function Frame({ image }: { image: CaseStudyImage }) {
   );
 }
 
+function AppStoreCard({
+  appStore,
+  className = "",
+  invert = false,
+  compact = false,
+}: {
+  appStore: { name: string; about: string; icon: string; url: string };
+  className?: string;
+  invert?: boolean;
+  compact?: boolean;
+}) {
+  return (
+    <div className={`mx-auto ${compact ? "max-w-[680px]" : "max-w-[1050px]"} px-3 sm:px-10 ${className}`}>
+      <a
+        href={appStore.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`flex items-center rounded-2xl transition-colors ${
+          compact ? "gap-4 p-5" : "gap-4 p-5 sm:gap-5 sm:p-8"
+        } ${invert ? "bg-black/5 hover:bg-black/8" : "bg-white/10 hover:bg-white/15"}`}
+      >
+        <Image
+          src={appStore.icon}
+          alt=""
+          width={compact ? 64 : 80}
+          height={compact ? 64 : 80}
+          className={`shrink-0 rounded-[22%] ${compact ? "size-14" : "size-14 sm:size-20"}`}
+        />
+        <span className="min-w-0 flex-1">
+          <span className={`block font-semibold ${compact ? "text-lg" : "text-lg sm:text-2xl"}`}>
+            {appStore.name}
+          </span>
+          <span
+            className={`block ${compact ? "text-base" : "text-sm sm:text-base"} ${invert ? "text-black/50" : "text-white/50"} ${compact ? "truncate" : ""}`}
+          >
+            {appStore.about}
+          </span>
+        </span>
+        <span
+          className={`shrink-0 rounded-full font-semibold ${compact ? "px-5 py-2.5 text-base" : "px-4 py-2 text-sm sm:px-6 sm:py-2.5 sm:text-base"} ${
+            invert ? "bg-black text-white" : "bg-white text-black"
+          }`}
+        >
+          Open
+        </span>
+      </a>
+    </div>
+  );
+}
+
 export default function CaseStudy({
   description,
+  appStore,
+  credits,
   hero,
   images,
   projectTitle,
 }: {
   description: string;
+  appStore?: { name: string; about: string; icon: string; url: string };
+  credits?: { label: string; value: string }[];
   hero: CaseStudyImage;
   images: CaseStudyImage[];
   projectTitle?: string;
@@ -39,28 +95,54 @@ export default function CaseStudy({
 
   return (
     <>
-      <div className="px-2 pt-12 sm:px-5 sm:pt-28">
+      <SmoothScroll />
+      <div className="px-2 pt-20 sm:px-5">
         <Frame image={hero} />
       </div>
-      <p className="mx-auto max-w-[1300px] px-3 py-6 text-lg leading-[1.7] sm:px-10 sm:py-12 sm:text-2xl sm:leading-[1.65]">
-        {description}
-      </p>
-      <div className="flex flex-col gap-2.5 px-2 pb-10 sm:gap-5 sm:px-5 sm:pb-20">
-        {rows.map((row) =>
-          row.length === 2 ? (
-            <div key={row[0].src} className="flex flex-col gap-2.5 sm:flex-row sm:gap-5">
-              {row.map((image) => (
-                <div key={image.src} className="w-full">
-                  <Frame image={image} />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <Frame key={row[0].src} image={row[0]} />
-          ),
-        )}
+      {appStore && <AppStoreCard appStore={appStore} className="mt-10 mb-6 sm:mt-20 sm:mb-10" />}
+      <div
+        className={`mx-auto max-w-[1050px] px-3 pb-10 sm:px-10 sm:pb-20 ${appStore ? "" : "pt-10 sm:pt-20"}`}
+      >
+        {description.split("\n\n").map((paragraph, i) => (
+          <p key={i} className="text-lg leading-[1.7] last:mb-0 mb-6 sm:mb-8 sm:text-2xl sm:leading-[1.65]">
+            {paragraph}
+          </p>
+        ))}
       </div>
-      {projectTitle && <ProjectSlider currentProjectTitle={projectTitle} />}
+      <div className={`flex flex-col gap-2.5 px-2 sm:gap-5 sm:px-5 ${credits ? "pb-2 sm:pb-4" : "pb-10 sm:pb-20"}`}>
+        {rows.map((row) => (
+          <div key={row[0].src}>
+            {row[0].videos ? (
+              <VideoScrollSlider videos={row[0].videos} />
+            ) : row.length === 2 ? (
+              <div className="flex flex-col gap-2.5 sm:flex-row sm:gap-5">
+                {row.map((image) => (
+                  <div key={image.src} className="w-full">
+                    <Frame image={image} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <Frame image={row[0]} />
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="bg-white text-black">
+        <div id="header-invert-start" />
+        {credits && (
+          <div className="mx-auto flex max-w-[1050px] flex-col items-center gap-6 px-3 pt-20 pb-6 text-center sm:gap-8 sm:px-10 sm:pt-32 sm:pb-10">
+            {credits.map((credit) => (
+              <div key={credit.label}>
+                <p className="text-base font-semibold text-black/40 sm:text-xl">{credit.label}</p>
+                <p className="text-xl font-semibold sm:text-3xl">{credit.value}</p>
+              </div>
+            ))}
+          </div>
+        )}
+        {appStore && <AppStoreCard appStore={appStore} invert compact className="pb-6 sm:pb-10" />}
+        {projectTitle && <ProjectSlider currentProjectTitle={projectTitle} />}
+      </div>
     </>
   );
 }

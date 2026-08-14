@@ -9,13 +9,13 @@ export const tomorrow = {
   title: "Tomorrow's Spaces",
   description:
     "Tomorrow's Spaces is a concept exploring how digital products and interfaces might look and feel in the years ahead — placeholder copy, update with the real project description.",
-  hero: { src: "/work/tomorrow/cover.jpg", aspect: 1888 / 680 },
+  hero: { src: "/work/tomorrow/01-hero.webp", aspect: 5334 / 3000 },
   images: [
-    { src: "/work/tomorrow/Frame 225.jpg", aspect: 16 / 9 },
-    { src: "/work/tomorrow/Frame 228.jpg", aspect: 16 / 9 },
-    { src: "/work/tomorrow/Frame 230.jpg", aspect: 16 / 9 },
-    { src: "/work/tomorrow/Frame 233.jpg", aspect: 16 / 9 },
-    { src: "/work/tomorrow/Frame 234.jpg", aspect: 16 / 9 },
-    { src: "/work/tomorrow/Frame 237.jpg", aspect: 16 / 9 },
+    { src: "/work/tomorrow/02-web.webp", aspect: 5334 / 3000 },
+    { src: "/work/tomorrow/03-store.webp", aspect: 5334 / 3000 },
+    { src: "/work/tomorrow/04-mobile.webp", aspect: 5334 / 3000 },
+    { src: "/work/tomorrow/05-product.webp", aspect: 5334 / 3000 },
+    { src: "/work/tomorrow/06-collection.webp", aspect: 5334 / 3000 },
+    { src: "/work/tomorrow/07-device.webp", aspect: 5334 / 3000 },
   ] satisfies CaseStudyImage[],
 };

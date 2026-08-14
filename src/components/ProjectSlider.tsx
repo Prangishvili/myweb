@@ -11,9 +11,9 @@ export default function ProjectSlider({ currentProjectTitle }: ProjectSliderProp
   const projects = work.filter((item) => item.title !== currentProjectTitle);
 
   return (
-    <section className="mt-20 border-t border-black/10 pt-20 sm:mt-32 sm:pt-32">
-      <div className="mx-[0.5rem] mb-8 sm:mx-[0.5rem] sm:mb-12">
-        <h2 className="text-xl font-semibold sm:text-2xl">Next Project</h2>
+    <section className="mt-10 pt-10 sm:mt-16 sm:pt-16">
+      <div className="mx-[0.5rem] mb-8 text-center sm:mx-[0.5rem] sm:mb-12">
+        <h2 className="text-4xl font-semibold sm:text-6xl">Next Project</h2>
       </div>
       <div className="grid grid-cols-1 gap-[0.5rem] px-[0.5rem] sm:grid-cols-2 sm:gap-5 sm:px-[0.5rem]">
         {projects.slice(0, 4).map((item) => {

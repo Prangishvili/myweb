@@ -9,13 +9,12 @@ export const aisi = {
   title: "AISI",
   description:
     "Discover over 500 luxury labels, emerging designers, and streetwear brands for both men and women. SHIPPING GLOBALLY.",
-  hero: { src: "/work/aisi/cover.jpg", aspect: 1888 / 680 },
+  hero: { src: "/work/aisi/01-hero.webp", aspect: 5334 / 3000 },
   images: [
-    { src: "/work/aisi/Frame 35.jpg", aspect: 16 / 9 },
-    { src: "/work/aisi/Frame 41.png", aspect: 16 / 9 },
-    { src: "/work/aisi/Frame 156.png", aspect: 16 / 9 },
-    { src: "/work/aisi/Frame 175.png", aspect: 16 / 9 },
-    { src: "/work/aisi/Frame 190.png", aspect: 16 / 9 },
-    { src: "/work/aisi/Frame 253.jpg", aspect: 16 / 9 },
+    { src: "/work/aisi/02-mobile.webp", aspect: 5334 / 3000 },
+    { src: "/work/aisi/03-desktop.webp", aspect: 5334 / 3000 },
+    { src: "/work/aisi/04-screens.webp", aspect: 5334 / 3000 },
+    { src: "/work/aisi/05-selling.webp", aspect: 5334 / 3000 },
+    { src: "/work/aisi/06-collection.webp", aspect: 5334 / 3000 },
   ] satisfies CaseStudyImage[],
 };

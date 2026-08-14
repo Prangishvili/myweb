@@ -10,8 +10,13 @@ const navItems = [
   { label: "Motion", href: "/work/motion-works" },
 ];
 
+function dispatchElementHover(id: string | null) {
+  window.dispatchEvent(new CustomEvent("header-hover", { detail: id }));
+}
+
 export default function Header() {
   const [infoOpen, setInfoOpen] = useState(false);
+  const [inverted, setInverted] = useState(false);
 
   useEffect(() => {
     if (!infoOpen) return;
@@ -22,21 +27,54 @@ export default function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, [infoOpen]);
 
+  useEffect(() => {
+    function onScroll() {
+      const marker = document.getElementById("header-invert-start");
+      setInverted(marker ? marker.getBoundingClientRect().top <= 80 : false);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
   return (
-    <>
+    <div className={`transition-colors duration-300 ${inverted ? "text-black" : ""}`}>
       <header className="fixed inset-x-0 top-0 z-50 flex sm:grid sm:grid-cols-12 items-start font-sans text-[15px] leading-[25px] font-semibold mt-[0.5rem] mx-[0.7rem] mb-[0.7rem] gap-[0.75rem] sm:gap-[1rem]">
-        <Link href="/" onClick={() => setInfoOpen(false)} className="shrink-0 whitespace-nowrap sm:col-span-1">
+        <Link
+          href="/"
+          onClick={() => setInfoOpen(false)}
+          onMouseEnter={() => dispatchElementHover("brand")}
+          onMouseLeave={() => dispatchElementHover(null)}
+          className="shrink-0 whitespace-nowrap sm:col-span-1"
+        >
           {site.name}
         </Link>
         <div className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap sm:min-w-0 sm:flex-none sm:overflow-visible sm:whitespace-normal sm:col-start-4 sm:col-span-5">
           {navItems.map((item, i) => (
             <span key={item.label}>
               {item.external ? (
-                <a href={item.href} target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={() => dispatchElementHover(item.label)}
+                  onMouseLeave={() => dispatchElementHover(null)}
+                  className="hover:opacity-60"
+                >
                   {item.label}
                 </a>
               ) : (
-                <Link href={item.href} onClick={() => setInfoOpen(false)} className="hover:opacity-60">
+                <Link
+                  href={item.href}
+                  onClick={() => setInfoOpen(false)}
+                  onMouseEnter={() => dispatchElementHover(item.label)}
+                  onMouseLeave={() => dispatchElementHover(null)}
+                  className="hover:opacity-60"
+                >
                   {item.label}
                 </Link>
               )}
@@ -44,7 +82,13 @@ export default function Header() {
             </span>
           ))}
         </div>
-        <button type="button" onClick={() => setInfoOpen((open) => !open)} className="shrink-0 sm:col-span-1 sm:ml-auto hover:opacity-60">
+        <button
+          type="button"
+          onClick={() => setInfoOpen((open) => !open)}
+          onMouseEnter={() => dispatchElementHover("Information")}
+          onMouseLeave={() => dispatchElementHover(null)}
+          className="shrink-0 sm:col-span-1 sm:ml-auto hover:opacity-60"
+        >
           Information
         </button>
       </header>
@@ -70,6 +114,6 @@ export default function Header() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

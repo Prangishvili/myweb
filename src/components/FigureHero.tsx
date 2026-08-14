@@ -7,6 +7,12 @@ import * as THREE from "three";
 
 const isMobile = () => typeof window !== "undefined" && window.innerWidth < 768;
 
+const SPRITE_SIZE = 0.035;
+const JITTER_AMOUNT = 0.015;
+const ZERO_VECTOR = new THREE.Vector3(0, 0, 0);
+
+const HEADER_ELEMENT_IDS = ["brand", "Works", "Exhibition", "Motion", "Information"];
+
 const VERTEX_IMAGE_URLS = Array.from(
   { length: 59 - 27 + 1 },
   (_, i) => `/onemoretest/${encodeURIComponent(`Rectangle ${27 + i}.svg`)}`
@@ -94,10 +100,15 @@ function loadSvgTexture(url: string): Promise<THREE.Texture> {
   });
 }
 
-function VertexImages({ scene }: { scene: THREE.Object3D }) {
+function VertexImages({ scene, hoveredRef }: { scene: THREE.Object3D; hoveredRef: React.RefObject<string | null> }) {
   const count = isMobile() ? 150 : 300;
   const triData = useMemo(() => buildTriangleData(scene), [scene]);
   const positions = useMemo(() => sampleTriangleData(triData, count), [triData, count]);
+
+  const elementAssignments = useMemo(
+    () => positions.map(() => HEADER_ELEMENT_IDS[Math.floor(Math.random() * HEADER_ELEMENT_IDS.length)]),
+    [positions]
+  );
 
   const [textures, setTextures] = useState<THREE.Texture[]>([]);
   useEffect(() => {
@@ -115,15 +126,73 @@ function VertexImages({ scene }: { scene: THREE.Object3D }) {
   useEffect(() => () => { materials.forEach((m) => m.dispose()); }, [materials]);
   useEffect(() => () => { textures.forEach((t) => t.dispose()); }, [textures]);
 
+  const originalMaterialIndices = useMemo(
+    () => positions.map((_, i) => (materials.length ? i % materials.length : 0)),
+    [positions, materials.length]
+  );
+  const shuffledMaterialIndices = useRef<number[]>([]);
+  useEffect(() => {
+    shuffledMaterialIndices.current = [...originalMaterialIndices];
+  }, [originalMaterialIndices]);
+
+  const jitterOffsets = useMemo(
+    () =>
+      positions.map(
+        () =>
+          new THREE.Vector3(
+            (Math.random() - 0.5) * 2 * JITTER_AMOUNT,
+            (Math.random() - 0.5) * 2 * JITTER_AMOUNT,
+            (Math.random() - 0.5) * 2 * JITTER_AMOUNT
+          )
+      ),
+    [positions]
+  );
+  const currentOffsets = useMemo(() => positions.map(() => new THREE.Vector3(0, 0, 0)), [positions]);
+
+  const groupRef = useRef<THREE.Group>(null);
+  const currentSizes = useMemo(() => new Float32Array(positions.length).fill(SPRITE_SIZE), [positions]);
+  const wasHoveredElement = useRef<boolean[]>([]);
+  useEffect(() => {
+    wasHoveredElement.current = positions.map(() => false);
+  }, [positions]);
+
+  useFrame((_, delta) => {
+    const hovered = hoveredRef.current;
+    const ease = 1 - Math.exp(-delta * 6);
+
+    groupRef.current?.children.forEach((child, i) => {
+      const isHoveredElement = !!hovered && elementAssignments[i] === hovered;
+      const target = hovered ? SPRITE_SIZE * 1.3 : SPRITE_SIZE;
+      currentSizes[i] += (target - currentSizes[i]) * ease;
+      child.scale.set(currentSizes[i], currentSizes[i], 1);
+
+      const targetOffset = hovered ? jitterOffsets[i] : ZERO_VECTOR;
+      currentOffsets[i].lerp(targetOffset, ease);
+      const pos = positions[i];
+      child.position.set(pos.x + currentOffsets[i].x, pos.y + currentOffsets[i].y, pos.z + currentOffsets[i].z);
+
+      if (materials.length === 0) return;
+      const sprite = child as THREE.Sprite;
+      if (isHoveredElement) {
+        if (!wasHoveredElement.current[i]) {
+          shuffledMaterialIndices.current[i] = Math.floor(Math.random() * materials.length);
+        }
+        sprite.material = materials[shuffledMaterialIndices.current[i]];
+      } else {
+        sprite.material = materials[originalMaterialIndices[i]];
+      }
+      wasHoveredElement.current[i] = isHoveredElement;
+    });
+  });
+
   if (materials.length === 0 || positions.length === 0) return null;
 
-  const size = 0.035;
   return (
-    <>
+    <group ref={groupRef}>
       {positions.map((pos, i) => (
-        <sprite key={i} material={materials[i % materials.length]} position={[pos.x, pos.y, pos.z]} scale={[size, size, 1]} />
+        <sprite key={i} material={materials[originalMaterialIndices[i]]} position={[pos.x, pos.y, pos.z]} scale={[SPRITE_SIZE, SPRITE_SIZE, 1]} />
       ))}
-    </>
+    </group>
   );
 }
 
@@ -132,10 +201,30 @@ function Figure() {
   const { scene } = useGLTF("/figure.glb");
 
   const groupRef = useRef<THREE.Group>(null);
+  const pointer = useRef({ x: 0, y: 0 });
+  const hoveredRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    const onPointerMove = (e: PointerEvent) => {
+      pointer.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      pointer.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener("pointermove", onPointerMove);
+    return () => window.removeEventListener("pointermove", onPointerMove);
+  }, []);
+
+  useEffect(() => {
+    const onHeaderHover = (e: Event) => {
+      hoveredRef.current = (e as CustomEvent<string | null>).detail;
+    };
+    window.addEventListener("header-hover", onHeaderHover);
+    return () => window.removeEventListener("header-hover", onHeaderHover);
+  }, []);
+
   useFrame((state, delta) => {
     if (!groupRef.current) return;
-    const targetY = state.pointer.x * 0.5;
-    const targetX = -state.pointer.y * 0.15;
+    const targetY = pointer.current.x * 0.5;
+    const targetX = -pointer.current.y * 0.15;
     const ease = 1 - Math.exp(-delta * 3);
     groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * ease;
     groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * ease;
@@ -143,7 +232,7 @@ function Figure() {
 
   return (
     <group ref={groupRef} scale={200}>
-      <VertexImages scene={scene} />
+      <VertexImages scene={scene} hoveredRef={hoveredRef} />
     </group>
   );
 }

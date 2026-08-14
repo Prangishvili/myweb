@@ -10,11 +10,18 @@ export const metadata: Metadata = {
 
 export default function SilkPage() {
   return (
-    <>
+    <div className="min-h-screen bg-black text-white">
       <Header />
       <main className="flex-1 pb-20">
-        <CaseStudy description={silk.description} hero={silk.hero} images={silk.images} projectTitle={silk.title} />
+        <CaseStudy
+          description={silk.description}
+          appStore={silk.appStore}
+          credits={silk.credits}
+          hero={silk.hero}
+          images={silk.images}
+          projectTitle={silk.title}
+        />
       </main>
-    </>
+    </div>
   );
 }
