@@ -13,7 +13,7 @@ export default function InspirationPage() {
       <main className="flex-1">
         <div className="flex flex-col gap-2.5 px-2 pt-24 pb-20 sm:gap-5 sm:px-5 sm:pt-28">
           <video
-            src="/work/showreel/Inspiration%20Creating.mp4"
+            src="https://xpm2mzg2i8lygpiz.public.blob.vercel-storage.com/work/showreel/Inspiration%20Creating.mp4"
             autoPlay
             muted
             loop
@@ -21,7 +21,7 @@ export default function InspirationPage() {
             className="aspect-[1920/1200] w-full object-cover"
           />
           <video
-            src="/work/showreel/Inspiration%20Themes.mp4"
+            src="https://xpm2mzg2i8lygpiz.public.blob.vercel-storage.com/work/showreel/Inspiration%20Themes.mp4"
             autoPlay
             muted
             loop

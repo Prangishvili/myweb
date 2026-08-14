@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: "Oto Prangi — Senior Product Designer",
     description:
       "Senior Product Designer with 15+ years of experience in creating digital products and design systems.",
-    images: ["/og-image.jpg"],
+    images: ["https://xpm2mzg2i8lygpiz.public.blob.vercel-storage.com/og-image.jpg"],
     type: "website",
   },
   twitter: {
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     title: "Oto Prangi — Senior Product Designer",
     description:
       "Senior Product Designer with 15+ years of experience in creating digital products and design systems.",
-    images: ["/og-image.jpg"],
+    images: ["https://xpm2mzg2i8lygpiz.public.blob.vercel-storage.com/og-image.jpg"],
   },
 };
 

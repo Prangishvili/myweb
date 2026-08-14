@@ -200,7 +200,7 @@ function VertexImages({ scene, hoveredRef }: { scene: THREE.Object3D; hoveredRef
 
 // ── Figure ─────────────────────────────────────────────────────────────────
 function Figure() {
-  const { scene } = useGLTF("/figure.glb");
+  const { scene } = useGLTF("https://xpm2mzg2i8lygpiz.public.blob.vercel-storage.com/figure.glb");
 
   const groupRef = useRef<THREE.Group>(null);
   const pointer = useRef({ x: 0, y: 0 });
@@ -239,7 +239,7 @@ function Figure() {
   );
 }
 
-useGLTF.preload("/figure.glb");
+useGLTF.preload("https://xpm2mzg2i8lygpiz.public.blob.vercel-storage.com/figure.glb");
 
 export default function FigureHero() {
   return (
