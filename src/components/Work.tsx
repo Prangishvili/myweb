@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { work } from "@/data/content";
+import LazyVideo from "@/components/LazyVideo";
 import ShuffleImage from "@/components/ShuffleImage";
 
 export default function Work() {
@@ -16,14 +17,7 @@ export default function Work() {
             style={{ backgroundColor: item.bg ?? "#000" }}
           >
             {item.video ? (
-              <video
-                src={item.video}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="absolute inset-0 size-full object-contain"
-              />
+              <LazyVideo src={item.video} className="size-full object-contain" />
             ) : item.hoverImages ? (
               <ShuffleImage cover={item.image!} images={item.hoverImages} alt={item.title} />
             ) : (
