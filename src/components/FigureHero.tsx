@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
@@ -13,10 +13,29 @@ const ZERO_VECTOR = new THREE.Vector3(0, 0, 0);
 
 const HEADER_ELEMENT_IDS = ["brand", "Works", "Exhibition", "Motion", "Information"];
 
-const VERTEX_IMAGE_URLS = Array.from(
-  { length: 59 - 27 + 1 },
-  (_, i) => `/onemoretest/${encodeURIComponent(`Rectangle ${27 + i}.svg`)}`
-);
+const VERTEX_COLORS = [
+  "#FF2020", "#FF9442", "#FFC72D", "#F6FF00", "#D4FF00", "#AFFF2D", "#20FF3A", "#2FFFE7",
+  "#46C7FF", "#2790FF", "#7315FF", "#BE19FF", "#EC16FF", "#FF258B", "#FF2962", "#A82424",
+  "#DBDE46", "#89C74C", "#2DBD71", "#0F6E52", "#FF9365", "#1B60C1", "#7521CF", "#D223E5",
+  "#FF37DE", "#C598BE", "#D26F6F", "#9A0003", "#C8E6E0", "#FFE679", "#FF9500", "#9A9A9A",
+  "#252525",
+];
+
+function createCircleTexture(): THREE.Texture {
+  const canvas = document.createElement("canvas");
+  canvas.width = 64;
+  canvas.height = 64;
+  const ctx = canvas.getContext("2d")!;
+  ctx.beginPath();
+  ctx.arc(32, 32, 32, 0, Math.PI * 2);
+  ctx.fillStyle = "#fff";
+  ctx.fill();
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.generateMipmaps = false;
+  tex.minFilter = THREE.LinearFilter;
+  return tex;
+}
 
 function CameraRig() {
   const { camera } = useThree();
@@ -79,27 +98,7 @@ function sampleTriangleData({ tris, cum, totalArea }: TriangleData, count: numbe
   return result;
 }
 
-// ── Vertex image sprites ───────────────────────────────────────────────────
-function loadSvgTexture(url: string): Promise<THREE.Texture> {
-  return new Promise((resolve) => {
-    const img = new window.Image();
-    img.decoding = "async";
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = 128;
-      canvas.height = 128;
-      canvas.getContext("2d")!.drawImage(img, 0, 0, 128, 128);
-      const tex = new THREE.CanvasTexture(canvas);
-      tex.colorSpace = THREE.SRGBColorSpace;
-      tex.generateMipmaps = false;
-      tex.minFilter = THREE.LinearFilter;
-      resolve(tex);
-    };
-    img.onerror = () => resolve(new THREE.Texture());
-    img.src = url;
-  });
-}
-
+// ── Vertex circle sprites ─────────────────────────────────────────────────
 function VertexImages({ scene, hoveredRef }: { scene: THREE.Object3D; hoveredRef: React.RefObject<string | null> }) {
   const count = isMobile() ? 150 : 300;
   const triData = useMemo(() => buildTriangleData(scene), [scene]);
@@ -110,21 +109,24 @@ function VertexImages({ scene, hoveredRef }: { scene: THREE.Object3D; hoveredRef
     [positions]
   );
 
-  const [textures, setTextures] = useState<THREE.Texture[]>([]);
-  useEffect(() => {
-    let cancelled = false;
-    Promise.all(VERTEX_IMAGE_URLS.map(loadSvgTexture)).then((texs) => {
-      if (!cancelled) setTextures(texs);
-    });
-    return () => { cancelled = true; };
-  }, []);
+  const texture = useMemo(() => createCircleTexture(), []);
+  useEffect(() => () => texture.dispose(), [texture]);
 
   const materials = useMemo(
-    () => textures.map((tex) => new THREE.SpriteMaterial({ map: tex, sizeAttenuation: true, transparent: true, depthWrite: false })),
-    [textures]
+    () =>
+      VERTEX_COLORS.map(
+        (color) =>
+          new THREE.SpriteMaterial({
+            map: texture,
+            color,
+            sizeAttenuation: true,
+            transparent: true,
+            depthWrite: false,
+          })
+      ),
+    [texture]
   );
   useEffect(() => () => { materials.forEach((m) => m.dispose()); }, [materials]);
-  useEffect(() => () => { textures.forEach((t) => t.dispose()); }, [textures]);
 
   const originalMaterialIndices = useMemo(
     () => positions.map((_, i) => (materials.length ? i % materials.length : 0)),
