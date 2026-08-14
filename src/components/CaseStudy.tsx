@@ -1,10 +1,12 @@
 import Image from "next/image";
 import type { CaseStudyImage } from "@/data/silk";
 import ProjectSlider from "@/components/ProjectSlider";
-import VideoScrollSlider from "@/components/VideoScrollSlider";
+import SequentialImageGrid from "@/components/SequentialImageGrid";
 import SmoothScroll from "@/components/SmoothScroll";
+import { blurPlaceholders } from "@/data/blurPlaceholders";
 
 function Frame({ image }: { image: CaseStudyImage }) {
+  const blurDataURL = blurPlaceholders[image.src];
   return (
     <div className="relative w-full overflow-hidden" style={{ aspectRatio: image.aspect }}>
       <Image
@@ -12,6 +14,8 @@ function Frame({ image }: { image: CaseStudyImage }) {
         alt=""
         fill
         sizes="100vw"
+        placeholder={blurDataURL ? "blur" : undefined}
+        blurDataURL={blurDataURL}
         className={`object-cover ${image.flip ? "-scale-x-100" : ""}`}
       />
     </div>
@@ -109,25 +113,10 @@ export default function CaseStudy({
           </p>
         ))}
       </div>
-      <div className={`flex flex-col gap-2.5 px-2 sm:gap-5 sm:px-5 ${credits ? "pb-2 sm:pb-4" : "pb-10 sm:pb-20"}`}>
-        {rows.map((row) => (
-          <div key={row[0].src}>
-            {row[0].videos ? (
-              <VideoScrollSlider videos={row[0].videos} />
-            ) : row.length === 2 ? (
-              <div className="flex flex-col gap-2.5 sm:flex-row sm:gap-5">
-                {row.map((image) => (
-                  <div key={image.src} className="w-full">
-                    <Frame image={image} />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <Frame image={row[0]} />
-            )}
-          </div>
-        ))}
-      </div>
+      <SequentialImageGrid
+        rows={rows}
+        className={`flex flex-col gap-2.5 px-2 sm:gap-5 sm:px-5 ${credits ? "pb-2 sm:pb-4" : "pb-10 sm:pb-20"}`}
+      />
       <div className="bg-white text-black">
         <div id="header-invert-start" />
         {credits && (
