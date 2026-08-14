@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { CaseStudyImage } from "@/data/silk";
 import ProjectSlider from "@/components/ProjectSlider";
-import SequentialImageGrid from "@/components/SequentialImageGrid";
+import BlurImageGrid from "@/components/BlurImageGrid";
 import SmoothScroll from "@/components/SmoothScroll";
 import { blurPlaceholders } from "@/data/blurPlaceholders";
 
@@ -113,7 +113,7 @@ export default function CaseStudy({
           </p>
         ))}
       </div>
-      <SequentialImageGrid
+      <BlurImageGrid
         rows={rows}
         className={`flex flex-col gap-2.5 px-2 sm:gap-5 sm:px-5 ${credits ? "pb-2 sm:pb-4" : "pb-10 sm:pb-20"}`}
       />
