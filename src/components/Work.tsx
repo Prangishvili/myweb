@@ -17,7 +17,12 @@ export default function Work() {
             style={{ backgroundColor: item.bg ?? "#000" }}
           >
             {item.video ? (
-              <LazyVideo src={item.video} className="size-full object-contain" />
+              <LazyVideo
+                src={item.video}
+                poster={item.poster!}
+                alt={item.title}
+                className="size-full object-contain"
+              />
             ) : item.hoverImages ? (
               <ShuffleImage cover={item.image!} images={item.hoverImages} alt={item.title} />
             ) : (
