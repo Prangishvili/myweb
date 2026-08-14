@@ -95,7 +95,8 @@ export default function Header() {
 
       {infoOpen && (
         <div
-          className="fixed inset-0 z-40 overflow-y-auto bg-[rgba(217,217,217,0.18)] px-6 pt-24 pb-16 backdrop-blur-[184px] sm:px-10 sm:pt-28"
+          data-lenis-prevent
+          className="fixed inset-0 z-40 overflow-y-auto overscroll-contain bg-[rgba(217,217,217,0.18)] px-6 pt-24 pb-16 backdrop-blur-[184px] sm:px-10 sm:pt-28"
           onClick={() => setInfoOpen(false)}
         >
           <div className="flex flex-col gap-6 font-serif text-2xl leading-[1.3] font-semibold sm:gap-10 sm:text-[48px]">

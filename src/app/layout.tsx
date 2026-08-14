@@ -38,6 +38,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${switzer.variable} h-full antialiased`}>
       <head>
+        <link rel="preconnect" href="https://xpm2mzg2i8lygpiz.public.blob.vercel-storage.com" />
+        <link rel="dns-prefetch" href="https://xpm2mzg2i8lygpiz.public.blob.vercel-storage.com" />
         <SchemaMarkup />
       </head>
       <body className="min-h-full flex flex-col bg-white text-black">{children}</body>

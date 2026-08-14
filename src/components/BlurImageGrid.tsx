@@ -1,27 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import type { CaseStudyImage } from "@/data/silk";
 import VideoScrollSlider from "@/components/VideoScrollSlider";
-import { blurPlaceholders } from "@/data/blurPlaceholders";
+import CoveredImage from "@/components/CoveredImage";
 
 function BlurFrame({ image }: { image: CaseStudyImage }) {
-  const blurDataURL = blurPlaceholders[image.src];
-
   return (
-    <div
-      className="relative w-full overflow-hidden bg-cover bg-center"
-      style={{ aspectRatio: image.aspect, backgroundImage: blurDataURL ? `url(${blurDataURL})` : undefined }}
-    >
-      <Image
-        src={image.src}
-        alt=""
-        fill
-        sizes="100vw"
-        placeholder={blurDataURL ? "blur" : undefined}
-        blurDataURL={blurDataURL}
-        className={`object-cover ${image.flip ? "-scale-x-100" : ""}`}
-      />
+    <div className="relative w-full overflow-hidden" style={{ aspectRatio: image.aspect }}>
+      <CoveredImage src={image.src} alt="" flip={image.flip} />
     </div>
   );
 }

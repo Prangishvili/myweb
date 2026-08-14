@@ -5,10 +5,6 @@
   --font-serif: var(--font-switzer);
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   font-family: var(--font-switzer), Arial, Helvetica, sans-serif;
 }

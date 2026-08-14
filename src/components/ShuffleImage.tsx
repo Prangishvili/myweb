@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function ShuffleImage({
   cover,
@@ -14,6 +14,7 @@ export default function ShuffleImage({
 }) {
   const [hovering, setHovering] = useState(false);
   const [index, setIndex] = useState(0);
+  const preloaded = useRef(false);
 
   useEffect(() => {
     if (!hovering) return;
@@ -32,7 +33,16 @@ export default function ShuffleImage({
       fill
       sizes="(min-width: 640px) 50vw, 100vw"
       className="object-contain"
-      onMouseEnter={() => setHovering(true)}
+      onMouseEnter={() => {
+        setHovering(true);
+        if (!preloaded.current) {
+          preloaded.current = true;
+          images.forEach((url) => {
+            const img = new window.Image();
+            img.src = url;
+          });
+        }
+      }}
       onMouseLeave={() => {
         setHovering(false);
         setIndex(0);
