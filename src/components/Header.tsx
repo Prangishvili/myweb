@@ -50,7 +50,10 @@ export default function Header() {
 
   return (
     <div className={`transition-colors duration-300 ${inverted ? "text-black" : ""}`}>
-      <header className="fixed inset-x-0 top-0 z-50 flex sm:grid sm:grid-cols-12 items-start font-sans text-[15px] leading-[25px] font-semibold uppercase mt-[0.5rem] mx-[0.7rem] mb-[0.7rem] gap-[0.75rem] sm:gap-[1rem]">
+      <header
+        className="fixed inset-x-0 top-0 z-50 flex sm:grid sm:grid-cols-12 items-start font-sans text-[15px] leading-[25px] font-semibold uppercase mt-[0.5rem] mx-[0.7rem] mb-[0.7rem] gap-[0.75rem] sm:gap-[1rem]"
+        style={{ viewTransitionName: "site-header" } as React.CSSProperties}
+      >
         <Link
           href="/"
           onClick={() => {

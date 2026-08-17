@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import MotionWorksGrid from "@/components/MotionWorksGrid";
 import { showreel } from "@/data/content";
+import PageTransition from "@/components/PageTransition";
 
 export const dynamic = "force-dynamic";
 
@@ -16,12 +17,14 @@ export default function MotionWorksPage() {
   return (
     <>
       <Header />
-      <main className="flex-1">
-        <div className="hidden">
-          <Hero />
-        </div>
-        <MotionWorksGrid showreel={showreel} />
-      </main>
+      <PageTransition>
+        <main className="flex-1">
+          <div className="hidden">
+            <Hero />
+          </div>
+          <MotionWorksGrid showreel={showreel} />
+        </main>
+      </PageTransition>
     </>
   );
 }

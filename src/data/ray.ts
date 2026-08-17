@@ -1,3 +1,5 @@
+import { CDN_BASE } from "@/data/cdn";
+
 export type CaseStudyImage = {
   src: string;
   aspect: number;
@@ -16,16 +18,16 @@ export const ray = {
     { label: "Scope", value: "IA, UX, Design System, Brand Identity" },
     { label: "Platforms", value: "Desktop, Tablet, Mobile" },
   ],
-  hero: { src: "/work/ray/01-hero.webp", aspect: 5334 / 3000 },
+  hero: { src: `${CDN_BASE}/work/ray/01-hero.webp`, aspect: 5334 / 3000 },
   images: [
-    { src: "/work/ray/02-mobile.webp", aspect: 5334 / 3000 },
-    { src: "/work/ray/03-devices.webp", aspect: 5334 / 3000 },
-    { src: "/work/ray/04-grid.webp", aspect: 5334 / 3000 },
-    { src: "/work/ray/05-desktop.webp", aspect: 5334 / 3000 },
-    { src: "/work/ray/06-pages.webp", aspect: 5334 / 3000 },
-    { src: "/work/ray/07-screens.webp", aspect: 5334 / 3000 },
-    { src: "/work/ray/08-widget.webp", aspect: 5334 / 3000 },
-    { src: "/work/ray/09-chat.webp", aspect: 5334 / 3000 },
-    { src: "/work/ray/10-logo.webp", aspect: 5334 / 3000 },
+    { src: `${CDN_BASE}/work/ray/02-mobile.webp`, aspect: 5334 / 3000 },
+    { src: `${CDN_BASE}/work/ray/03-devices.webp`, aspect: 5334 / 3000 },
+    { src: `${CDN_BASE}/work/ray/04-grid.webp`, aspect: 5334 / 3000 },
+    { src: `${CDN_BASE}/work/ray/05-desktop.webp`, aspect: 5334 / 3000 },
+    { src: `${CDN_BASE}/work/ray/06-pages.webp`, aspect: 5334 / 3000 },
+    { src: `${CDN_BASE}/work/ray/07-screens.webp`, aspect: 5334 / 3000 },
+    { src: `${CDN_BASE}/work/ray/08-widget.webp`, aspect: 5334 / 3000 },
+    { src: `${CDN_BASE}/work/ray/09-chat.webp`, aspect: 5334 / 3000 },
+    { src: `${CDN_BASE}/work/ray/10-logo.webp`, aspect: 5334 / 3000 },
   ] satisfies CaseStudyImage[],
 };

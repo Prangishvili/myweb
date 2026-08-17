@@ -5,6 +5,8 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { VERTEX_COLORS } from "@/data/palette";
+import { site } from "@/data/content";
+import { CDN_BASE } from "@/data/cdn";
 
 const isMobile = () => typeof window !== "undefined" && window.innerWidth < 768;
 
@@ -327,7 +329,7 @@ function VertexImages({
 
 // ── Figure ─────────────────────────────────────────────────────────────────
 function Figure({ repelSettingsRef }: { repelSettingsRef: React.RefObject<RepelSettings> }) {
-  const { scene } = useGLTF("/figure.glb");
+  const { scene } = useGLTF(`${CDN_BASE}/figure.glb`);
 
   const groupRef = useRef<THREE.Group>(null);
   const pointer = useRef({ x: 0, y: 0 });
@@ -366,7 +368,7 @@ function Figure({ repelSettingsRef }: { repelSettingsRef: React.RefObject<RepelS
   );
 }
 
-useGLTF.preload("/figure.glb");
+useGLTF.preload(`${CDN_BASE}/figure.glb`);
 
 const REPEL_DEBUG_CONTROLS: { key: keyof RepelSettings; label: string; min: number; max: number; step: number }[] = [
   { key: "radiusRatio", label: "Radius", min: 0.1, max: 2, step: 0.01 },
@@ -443,7 +445,7 @@ export default function FigureHero() {
   }, []);
 
   return (
-    <section className="relative h-[130dvh] w-full bg-white">
+    <section className="relative h-[120dvh] w-full bg-white">
       <Canvas dpr={[1, isMobile() ? 1.5 : 2]} gl={{ antialias: true }}>
         <PerspectiveCamera makeDefault position={[0, 180, 430]} fov={40} near={0.1} far={5000} />
         <CameraRig />
@@ -451,6 +453,9 @@ export default function FigureHero() {
           <Figure repelSettingsRef={repelSettingsRef} />
         </Suspense>
       </Canvas>
+      <div className="pointer-events-none absolute inset-x-0 bottom-12 z-10 flex flex-col items-center px-6 text-center font-serif text-[22px] font-semibold leading-[1.25] sm:bottom-16 sm:px-10 sm:text-[32px]">
+        <p className="max-w-3xl">{site.bio}</p>
+      </div>
       {panelVisible && <RepelDebugPanel repelSettingsRef={repelSettingsRef} />}
     </section>
   );

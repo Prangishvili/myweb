@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Work from "@/components/Work";
+import PageTransition from "@/components/PageTransition";
 
 export const metadata: Metadata = {
   title: "Work — Oto Prangi | Product Design & Design Systems",
@@ -12,9 +13,11 @@ export default function WorkPage() {
   return (
     <>
       <Header />
-      <main className="flex-1 pt-20">
-        <Work />
-      </main>
+      <PageTransition>
+        <main className="flex-1 pt-20">
+          <Work />
+        </main>
+      </PageTransition>
     </>
   );
 }

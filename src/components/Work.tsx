@@ -6,12 +6,8 @@ import { work } from "@/data/content";
 import LazyVideo from "@/components/LazyVideo";
 import ShuffleImage from "@/components/ShuffleImage";
 import Reveal from "@/components/Reveal";
-import { useCurtain } from "@/components/TransitionCurtain";
-import { getProjectPalette } from "@/data/projectPalettes";
 
 export default function Work() {
-  const triggerCurtain = useCurtain();
-
   return (
     <section
       id="work"
@@ -44,9 +40,8 @@ export default function Work() {
           </div>
         );
 
-        const palette = getProjectPalette(item.href);
         const tile = item.href ? (
-          <Link key={item.title} href={item.href} onNavigate={palette ? () => triggerCurtain(palette) : undefined}>
+          <Link key={item.title} href={item.href}>
             {cover}
           </Link>
         ) : (

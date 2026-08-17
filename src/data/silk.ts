@@ -1,3 +1,5 @@
+import { CDN_BASE } from "@/data/cdn";
+
 export type CaseStudyImage = {
   src: string;
   aspect: number;
@@ -14,7 +16,7 @@ export const silk = {
   appStore: {
     name: "Silk Bank",
     about: "Manage your funds, transfer instantly, and pay — all without commission fees.",
-    icon: "/work/silk/appstore-icon.webp",
+    icon: `${CDN_BASE}/work/silk/appstore-icon.webp`,
     url: "https://apps.apple.com/us/app/silk-bank/id6463405199",
   },
   credits: [
@@ -25,10 +27,10 @@ export const silk = {
     { label: "Scope", value: "IA, UX, Design System, Brand Identity" },
     { label: "Platforms", value: "Desktop, Tablet, Mobile" },
   ],
-  hero: { src: "/work/silk/00-hero.webp", aspect: 1888 / 680 },
+  hero: { src: `${CDN_BASE}/work/silk/00-hero.webp`, aspect: 1888 / 680 },
   images: [
     {
-      src: "/work/silk/01-hero.webp",
+      src: `${CDN_BASE}/work/silk/01-hero.webp`,
       aspect: 16 / 9,
       caption: {
         title: "Image 1 — Desktop Dashboard",
@@ -36,7 +38,7 @@ export const silk = {
       },
     },
     {
-      src: "/work/silk/02-Grid.webp",
+      src: `${CDN_BASE}/work/silk/02-Grid.webp`,
       aspect: 16 / 9,
       caption: {
         title: "Image 2 — Product Ecosystem",
@@ -44,7 +46,7 @@ export const silk = {
       },
     },
     {
-      src: "/work/silk/03-Chat.webp",
+      src: `${CDN_BASE}/work/silk/03-Chat.webp`,
       aspect: 16 / 9,
       caption: {
         title: "Image 3 — Group Chat",
@@ -52,7 +54,7 @@ export const silk = {
       },
     },
     {
-      src: "/work/silk/04-Banner.webp",
+      src: `${CDN_BASE}/work/silk/04-Banner.webp`,
       aspect: 16 / 9,
       caption: {
         title: "Image 4 — Brand Campaign",
@@ -60,7 +62,7 @@ export const silk = {
       },
     },
     {
-      src: "/work/silk/05-Tablet.webp",
+      src: `${CDN_BASE}/work/silk/05-Tablet.webp`,
       aspect: 16 / 9,
       caption: {
         title: "Image 5 — Financial Reports, Tablet",
@@ -68,7 +70,7 @@ export const silk = {
       },
     },
     {
-      src: "/work/silk/06-Mobile.webp",
+      src: `${CDN_BASE}/work/silk/06-Mobile.webp`,
       aspect: 16 / 9,
       caption: {
         title: "Image 6 — Banking & Loyalty, Mobile",
@@ -76,26 +78,26 @@ export const silk = {
       },
     },
     {
-      src: "/work/silk/videos/01.mp4",
+      src: `${CDN_BASE}/work/silk/videos/01.mp4`,
       aspect: 16 / 9,
       videos: [
-        { src: "/work/silk/videos/01.mp4", aspect: 3084 / 1994 },
-        { src: "/work/silk/videos/02.mp4", aspect: 3916 / 2206 },
-        { src: "/work/silk/videos/03.mp4", aspect: 1052 / 2264 },
-        { src: "/work/silk/videos/04.mp4", aspect: 1044 / 2258 },
-        { src: "/work/silk/videos/05.mp4", aspect: 1044 / 2258 },
+        { src: `${CDN_BASE}/work/silk/videos/01.mp4`, aspect: 3084 / 1994 },
+        { src: `${CDN_BASE}/work/silk/videos/02.mp4`, aspect: 3916 / 2206 },
+        { src: `${CDN_BASE}/work/silk/videos/03.mp4`, aspect: 1052 / 2264 },
+        { src: `${CDN_BASE}/work/silk/videos/04.mp4`, aspect: 1044 / 2258 },
+        { src: `${CDN_BASE}/work/silk/videos/05.mp4`, aspect: 1044 / 2258 },
       ],
     },
     {
-      src: "/work/silk/07-Marketplace.webp",
+      src: `${CDN_BASE}/work/silk/07-Marketplace.webp`,
       aspect: 2180 / 1455,
       caption: {
         title: "Image 7 — Marketplace",
         body: "Silk's ambition goes beyond finance into commerce. A curated storefront inside the app turns the platform into a destination rather than a utility — users don't just manage money here, they spend it. The light treatment separates the shopping context from the rest of the product visually, reinforcing the shift in mindset.",
       },
     },
-    { src: "/work/silk/08-Silk.webp", aspect: 16 / 9 },
-    { src: "/work/silk/09-Widgets.webp", aspect: 16 / 9 },
-    { src: "/work/silk/10-Silk%20Logo.webp", aspect: 16 / 9 },
+    { src: `${CDN_BASE}/work/silk/08-Silk.webp`, aspect: 16 / 9 },
+    { src: `${CDN_BASE}/work/silk/09-Widgets.webp`, aspect: 16 / 9 },
+    { src: `${CDN_BASE}/work/silk/10-Silk%20Logo.webp`, aspect: 16 / 9 },
   ] satisfies CaseStudyImage[],
 };

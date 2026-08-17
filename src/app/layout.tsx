@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import SchemaMarkup from "@/components/SchemaMarkup";
-import TransitionCurtainProvider from "@/components/TransitionCurtain";
+import { CDN_BASE } from "@/data/cdn";
 import "./globals.css";
 
 const switzer = localFont({
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     title: "Oto Prangi — Senior Product Designer",
     description:
       "Senior Product Designer with 15+ years of experience in creating digital products and design systems.",
-    images: ["/og-image.jpg"],
+    images: [`${CDN_BASE}/og-image.jpg`],
     type: "website",
   },
   twitter: {
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     title: "Oto Prangi — Senior Product Designer",
     description:
       "Senior Product Designer with 15+ years of experience in creating digital products and design systems.",
-    images: ["/og-image.jpg"],
+    images: [`${CDN_BASE}/og-image.jpg`],
   },
 };
 
@@ -41,9 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <SchemaMarkup />
       </head>
-      <body className="min-h-full flex flex-col bg-white text-black">
-        <TransitionCurtainProvider>{children}</TransitionCurtainProvider>
-      </body>
+      <body className="min-h-full flex flex-col bg-white text-black">{children}</body>
     </html>
   );
 }

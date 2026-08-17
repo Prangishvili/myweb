@@ -5,8 +5,6 @@ import Link from "next/link";
 import { work } from "@/data/content";
 import ShuffleImage from "@/components/ShuffleImage";
 import Reveal from "@/components/Reveal";
-import { useCurtain } from "@/components/TransitionCurtain";
-import { getProjectPalette } from "@/data/projectPalettes";
 
 interface ProjectSliderProps {
   currentProjectTitle: string;
@@ -14,7 +12,6 @@ interface ProjectSliderProps {
 
 export default function ProjectSlider({ currentProjectTitle }: ProjectSliderProps) {
   const projects = work.filter((item) => item.title !== currentProjectTitle);
-  const triggerCurtain = useCurtain();
 
   return (
     <section className="mt-10 pt-10 sm:mt-16 sm:pt-16">
@@ -51,16 +48,9 @@ export default function ProjectSlider({ currentProjectTitle }: ProjectSliderProp
             </div>
           );
 
-          const palette = getProjectPalette(item.href);
           return (
             <Reveal key={item.title} delay={(index % 2) * 80}>
-              {item.href ? (
-                <Link href={item.href} onNavigate={palette ? () => triggerCurtain(palette) : undefined}>
-                  {tile}
-                </Link>
-              ) : (
-                tile
-              )}
+              {item.href ? <Link href={item.href}>{tile}</Link> : tile}
             </Reveal>
           );
         })}
