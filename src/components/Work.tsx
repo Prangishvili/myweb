@@ -15,7 +15,7 @@ export default function Work() {
   return (
     <section
       id="work"
-      className="grid scroll-mt-28 grid-cols-1 gap-[0.5rem] sm:grid-cols-2 sm:scroll-mt-36 mx-[0.5rem] mb-24"
+      className="grid scroll-mt-28 grid-cols-1 gap-[0.5rem] min-[900px]:grid-cols-2 sm:scroll-mt-36 mx-[0.5rem] mb-24"
     >
       {work.map((item, index) => {
         const cover = (
@@ -37,7 +37,7 @@ export default function Work() {
                 src={item.image!}
                 alt={item.title}
                 fill
-                sizes="(min-width: 640px) 50vw, 100vw"
+                sizes="(min-width: 900px) 50vw, 100vw"
                 className="object-cover"
               />
             )}
@@ -56,7 +56,7 @@ export default function Work() {
         return (
           <Reveal key={item.title} delay={(index % 2) * 80}>
             {tile}
-            <p className="text-sm font-semibold mt-2 mb-4">{item.title}</p>
+            <p className="text-base font-semibold mt-2 mb-4">{item.title}</p>
           </Reveal>
         );
       })}

@@ -19,16 +19,20 @@ function dispatchElementHover(id: string | null) {
 export default function Header() {
   const pathname = usePathname();
   const [infoOpen, setInfoOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const [inverted, setInverted] = useState(false);
 
   useEffect(() => {
-    if (!infoOpen) return;
+    if (!infoOpen && !contactOpen) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setInfoOpen(false);
+      if (e.key === "Escape") {
+        setInfoOpen(false);
+        setContactOpen(false);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [infoOpen]);
+  }, [infoOpen, contactOpen]);
 
   useEffect(() => {
     function onScroll() {
@@ -49,7 +53,10 @@ export default function Header() {
       <header className="fixed inset-x-0 top-0 z-50 flex sm:grid sm:grid-cols-12 items-start font-sans text-[15px] leading-[25px] font-semibold uppercase mt-[0.5rem] mx-[0.7rem] mb-[0.7rem] gap-[0.75rem] sm:gap-[1rem]">
         <Link
           href="/"
-          onClick={() => setInfoOpen(false)}
+          onClick={() => {
+            setInfoOpen(false);
+            setContactOpen(false);
+          }}
           onMouseEnter={() => dispatchElementHover("brand")}
           onMouseLeave={() => dispatchElementHover(null)}
           className="shrink-0 whitespace-nowrap sm:col-span-1"
@@ -75,6 +82,7 @@ export default function Header() {
                   href={item.href}
                   onClick={(e) => {
                     setInfoOpen(false);
+                    setContactOpen(false);
                     if (item.label === "Works" && pathname === "/") {
                       e.preventDefault();
                       scrollToSection("work");
@@ -93,12 +101,27 @@ export default function Header() {
         </div>
         <button
           type="button"
-          onClick={() => setInfoOpen((open) => !open)}
+          onClick={() => {
+            setContactOpen(false);
+            setInfoOpen((open) => !open);
+          }}
           onMouseEnter={() => dispatchElementHover("Information")}
           onMouseLeave={() => dispatchElementHover(null)}
-          className="shrink-0 sm:col-span-1 sm:ml-auto hover:opacity-60"
+          className="shrink-0 uppercase sm:col-span-1 sm:ml-auto hover:opacity-60"
         >
           Information
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setInfoOpen(false);
+            setContactOpen((open) => !open);
+          }}
+          onMouseEnter={() => dispatchElementHover("Contact")}
+          onMouseLeave={() => dispatchElementHover(null)}
+          className="shrink-0 uppercase sm:col-start-12 sm:ml-auto hover:opacity-60"
+        >
+          Contact
         </button>
       </header>
 
@@ -121,6 +144,36 @@ export default function Header() {
                 ))}
               </p>
             ))}
+          </div>
+        </div>
+      )}
+
+      {contactOpen && (
+        <div
+          data-lenis-prevent
+          className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto overscroll-contain bg-[rgba(217,217,217,0.18)] px-6 backdrop-blur-[184px] sm:px-10"
+          onClick={() => setContactOpen(false)}
+        >
+          <div className="flex flex-col gap-6 text-center font-serif text-2xl leading-[1.3] font-semibold sm:gap-10 sm:text-[48px]">
+            <p onClick={(e) => e.stopPropagation()}>Let&apos;s talk</p>
+            <p onClick={(e) => e.stopPropagation()}>
+              {site.links.map((link, i) => {
+                const external = link.href.startsWith("http");
+                return (
+                  <span key={link.label}>
+                    <a
+                      href={link.href}
+                      target={external ? "_blank" : undefined}
+                      rel={external ? "noopener noreferrer" : undefined}
+                      className="hover:opacity-60"
+                    >
+                      {link.label}
+                    </a>
+                    {i < site.links.length - 1 && <span>, </span>}
+                  </span>
+                );
+              })}
+            </p>
           </div>
         </div>
       )}

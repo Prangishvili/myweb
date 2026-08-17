@@ -1,6 +1,6 @@
 export const site = {
   name: "Oto Prangi",
-  bio: "I work as a Senior Product Designer with local and international teams, offering creative direction, user experiences, and interface design with over fifteen years of knowledge in building digital products.",
+  bio: "Leading design wherever the discipline lines blur — AI, systems, brand, space.",
   links: [
     { label: "+995 593 26 11 77", href: "tel:+995593261177" },
     { label: "hello@otoprangi.com", href: "mailto:hello@otoprangi.com" },

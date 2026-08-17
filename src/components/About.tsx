@@ -4,10 +4,10 @@ export default function About() {
   return (
     <section
       id="about"
-      className="flex flex-col gap-6 pb-32 pt-32 font-serif text-[24px] font-semibold sm:gap-12 sm:text-[48px] m-[0.7rem]"
+      className="flex flex-col items-center gap-6 pb-32 text-center font-serif text-[24px] font-semibold sm:gap-12 sm:text-[48px] m-[0.7rem]"
     >
-      <p className="leading-[1.2] sm:leading-[54px]">{site.bio}</p>
-      <p id="contact" className="leading-[1.2] sm:leading-[54px]">
+      <p className="max-w-3xl leading-[1.2] text-[28px] sm:text-[64px] sm:leading-[68px]">{site.bio}</p>
+      {/* <p id="contact" className="leading-[1.2] sm:leading-[54px]">
         {site.links.map((link, i) => {
           const external = link.href.startsWith("http");
           return (
@@ -24,7 +24,7 @@ export default function About() {
             </span>
           );
         })}
-      </p>
+      </p> */}
     </section>
   );
 }

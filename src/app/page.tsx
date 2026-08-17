@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import FigureHero from "@/components/FigureHero";
-// import About from "@/components/About";
+import About from "@/components/About";
 import Work from "@/components/Work";
 import SmoothScroll from "@/components/SmoothScroll";
 
@@ -11,7 +11,7 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <FigureHero />
-        {/* <About /> */}
+        <About />
         <Work />
       </main>
     </>

@@ -30,13 +30,13 @@ const FLOAT_FREQ_MAX = 0.4;
 // onto the figure's plane) get pushed directly away from it, falling off with distance.
 // Scaled off the head's own bounding radius (not a flat number) so the reach covers
 // most of the figure instead of only a small patch right under the cursor.
-const REPEL_RADIUS_RATIO = 1.42;
-const REPEL_STRENGTH = 1.44;
+const REPEL_RADIUS_RATIO = 1.7;
+const REPEL_STRENGTH = 0.05;
 const REPEL_FALLOFF_EXPONENT = 6;
 
 type RepelSettings = { radiusRatio: number; strength: number; falloffExponent: number };
 
-const HEADER_ELEMENT_IDS = ["brand", "Works", "Exhibition", "Motion", "Information"];
+const HEADER_ELEMENT_IDS = ["brand", "Works", "Exhibition", "Motion", "Information", "Contact"];
 
 function createCircleTexture(): THREE.Texture {
   const size = 1024;
@@ -443,7 +443,7 @@ export default function FigureHero() {
   }, []);
 
   return (
-    <section className="relative h-[100dvh] w-full bg-white">
+    <section className="relative h-[130dvh] w-full bg-white">
       <Canvas dpr={[1, isMobile() ? 1.5 : 2]} gl={{ antialias: true }}>
         <PerspectiveCamera makeDefault position={[0, 180, 430]} fov={40} near={0.1} far={5000} />
         <CameraRig />
