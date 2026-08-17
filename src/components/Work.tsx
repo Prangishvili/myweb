@@ -1,16 +1,23 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { work } from "@/data/content";
 import LazyVideo from "@/components/LazyVideo";
 import ShuffleImage from "@/components/ShuffleImage";
+import Reveal from "@/components/Reveal";
+import { useCurtain } from "@/components/TransitionCurtain";
+import { getProjectPalette } from "@/data/projectPalettes";
 
 export default function Work() {
+  const triggerCurtain = useCurtain();
+
   return (
     <section
       id="work"
       className="grid scroll-mt-28 grid-cols-1 gap-[0.5rem] sm:grid-cols-2 sm:scroll-mt-36 mx-[0.5rem] mb-24"
     >
-      {work.map((item) => {
+      {work.map((item, index) => {
         const cover = (
           <div
             className="group relative aspect-square overflow-hidden"
@@ -37,8 +44,9 @@ export default function Work() {
           </div>
         );
 
+        const palette = getProjectPalette(item.href);
         const tile = item.href ? (
-          <Link key={item.title} href={item.href}>
+          <Link key={item.title} href={item.href} onNavigate={palette ? () => triggerCurtain(palette) : undefined}>
             {cover}
           </Link>
         ) : (
@@ -46,10 +54,10 @@ export default function Work() {
         );
 
         return (
-          <div key={item.title}>
+          <Reveal key={item.title} delay={(index % 2) * 80}>
             {tile}
             <p className="text-sm font-semibold mt-2 mb-4">{item.title}</p>
-          </div>
+          </Reveal>
         );
       })}
     </section>

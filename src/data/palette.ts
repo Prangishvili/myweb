@@ -1,0 +1,7 @@
+export const VERTEX_COLORS = [
+  "#FF2020", "#FF9442", "#FFC72D", "#F6FF00", "#D4FF00", "#AFFF2D", "#20FF3A", "#2FFFE7",
+  "#46C7FF", "#2790FF", "#7315FF", "#BE19FF", "#EC16FF", "#FF258B", "#FF2962",
+  "#DBDE46", "#89C74C", "#2DBD71", "#0F6E52", "#FF9365", "#1B60C1", "#7521CF", "#D223E5",
+  "#FF37DE", "#C598BE", "#D26F6F", "#C8E6E0", "#FFE679", "#FF9500", "#9A9A9A",
+  "#252525",
+];

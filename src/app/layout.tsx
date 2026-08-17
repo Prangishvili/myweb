@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import SchemaMarkup from "@/components/SchemaMarkup";
+import TransitionCurtainProvider from "@/components/TransitionCurtain";
 import "./globals.css";
 
 const switzer = localFont({
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
     title: "Oto Prangi — Senior Product Designer",
     description:
       "Senior Product Designer with 15+ years of experience in creating digital products and design systems.",
-    images: ["https://xpm2mzg2i8lygpiz.public.blob.vercel-storage.com/og-image.jpg"],
+    images: ["/og-image.jpg"],
     type: "website",
   },
   twitter: {
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
     title: "Oto Prangi — Senior Product Designer",
     description:
       "Senior Product Designer with 15+ years of experience in creating digital products and design systems.",
-    images: ["https://xpm2mzg2i8lygpiz.public.blob.vercel-storage.com/og-image.jpg"],
+    images: ["/og-image.jpg"],
   },
 };
 
@@ -38,11 +39,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${switzer.variable} h-full antialiased`}>
       <head>
-        <link rel="preconnect" href="https://xpm2mzg2i8lygpiz.public.blob.vercel-storage.com" />
-        <link rel="dns-prefetch" href="https://xpm2mzg2i8lygpiz.public.blob.vercel-storage.com" />
         <SchemaMarkup />
       </head>
-      <body className="min-h-full flex flex-col bg-white text-black">{children}</body>
+      <body className="min-h-full flex flex-col bg-white text-black">
+        <TransitionCurtainProvider>{children}</TransitionCurtainProvider>
+      </body>
     </html>
   );
 }

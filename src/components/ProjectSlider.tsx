@@ -1,7 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { work } from "@/data/content";
 import ShuffleImage from "@/components/ShuffleImage";
+import Reveal from "@/components/Reveal";
+import { useCurtain } from "@/components/TransitionCurtain";
+import { getProjectPalette } from "@/data/projectPalettes";
 
 interface ProjectSliderProps {
   currentProjectTitle: string;
@@ -9,6 +14,7 @@ interface ProjectSliderProps {
 
 export default function ProjectSlider({ currentProjectTitle }: ProjectSliderProps) {
   const projects = work.filter((item) => item.title !== currentProjectTitle);
+  const triggerCurtain = useCurtain();
 
   return (
     <section className="mt-10 pt-10 sm:mt-16 sm:pt-16">
@@ -16,7 +22,7 @@ export default function ProjectSlider({ currentProjectTitle }: ProjectSliderProp
         <h2 className="text-4xl font-semibold sm:text-6xl">Next Project</h2>
       </div>
       <div className="grid grid-cols-1 gap-[0.5rem] px-[0.5rem] sm:grid-cols-2 sm:gap-5 sm:px-[0.5rem]">
-        {projects.slice(0, 4).map((item) => {
+        {projects.slice(0, 4).map((item, index) => {
           const tile = (
             <div
               className="group relative aspect-square overflow-hidden"
@@ -45,12 +51,17 @@ export default function ProjectSlider({ currentProjectTitle }: ProjectSliderProp
             </div>
           );
 
-          return item.href ? (
-            <Link key={item.title} href={item.href}>
-              {tile}
-            </Link>
-          ) : (
-            <div key={item.title}>{tile}</div>
+          const palette = getProjectPalette(item.href);
+          return (
+            <Reveal key={item.title} delay={(index % 2) * 80}>
+              {item.href ? (
+                <Link href={item.href} onNavigate={palette ? () => triggerCurtain(palette) : undefined}>
+                  {tile}
+                </Link>
+              ) : (
+                tile
+              )}
+            </Reveal>
           );
         })}
       </div>

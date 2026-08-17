@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { site, cv } from "@/data/content";
+import { scrollToSection } from "@/components/SmoothScroll";
 
 const navItems = [
-  { label: "Works", href: "/work" },
+  { label: "Works", href: "/#work" },
   { label: "Exhibition", href: "https://reply.gallery", external: true },
   { label: "Motion", href: "/work/motion-works" },
 ];
@@ -15,6 +17,7 @@ function dispatchElementHover(id: string | null) {
 }
 
 export default function Header() {
+  const pathname = usePathname();
   const [infoOpen, setInfoOpen] = useState(false);
   const [inverted, setInverted] = useState(false);
 
@@ -43,7 +46,7 @@ export default function Header() {
 
   return (
     <div className={`transition-colors duration-300 ${inverted ? "text-black" : ""}`}>
-      <header className="fixed inset-x-0 top-0 z-50 flex sm:grid sm:grid-cols-12 items-start font-sans text-[15px] leading-[25px] font-semibold mt-[0.5rem] mx-[0.7rem] mb-[0.7rem] gap-[0.75rem] sm:gap-[1rem]">
+      <header className="fixed inset-x-0 top-0 z-50 flex sm:grid sm:grid-cols-12 items-start font-sans text-[15px] leading-[25px] font-semibold uppercase mt-[0.5rem] mx-[0.7rem] mb-[0.7rem] gap-[0.75rem] sm:gap-[1rem]">
         <Link
           href="/"
           onClick={() => setInfoOpen(false)}
@@ -70,7 +73,13 @@ export default function Header() {
               ) : (
                 <Link
                   href={item.href}
-                  onClick={() => setInfoOpen(false)}
+                  onClick={(e) => {
+                    setInfoOpen(false);
+                    if (item.label === "Works" && pathname === "/") {
+                      e.preventDefault();
+                      scrollToSection("work");
+                    }
+                  }}
                   onMouseEnter={() => dispatchElementHover(item.label)}
                   onMouseLeave={() => dispatchElementHover(null)}
                   className="hover:opacity-60"
