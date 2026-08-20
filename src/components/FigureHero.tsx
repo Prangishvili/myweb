@@ -5,7 +5,6 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { VERTEX_COLORS } from "@/data/palette";
-import { site } from "@/data/content";
 import { CDN_BASE } from "@/data/cdn";
 
 const isMobile = () => typeof window !== "undefined" && window.innerWidth < 768;
@@ -454,7 +453,11 @@ export default function FigureHero() {
         </Suspense>
       </Canvas>
       <div className="pointer-events-none absolute inset-x-0 bottom-12 z-10 flex flex-col items-center px-6 text-center font-serif text-[22px] font-semibold leading-[1.25] sm:bottom-16 sm:px-10 sm:text-[32px]">
-        <p className="max-w-3xl">{site.bio}</p>
+        <p className="max-w-3xl">
+          Leading design where the discipline lines blur —
+          <br />
+          AI, systems, brand, space.
+        </p>
       </div>
       {panelVisible && <RepelDebugPanel repelSettingsRef={repelSettingsRef} />}
     </section>

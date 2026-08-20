@@ -2,7 +2,7 @@ import { CDN_BASE } from "@/data/cdn";
 
 export const site = {
   name: "Oto Prangi",
-  bio: "Leading design wherever the discipline lines blur — AI, systems, brand, space.",
+  bio: "Leading design where the discipline lines blur — AI, systems, brand, space.",
   links: [
     { label: "+995 593 26 11 77", href: "tel:+995593261177" },
     { label: "hello@otoprangi.com", href: "mailto:hello@otoprangi.com" },
