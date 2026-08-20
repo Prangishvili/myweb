@@ -19,7 +19,7 @@ function AppStoreCard({
   invert = false,
   compact = false,
 }: {
-  appStore: { name: string; about: string; icon: string; url: string };
+  appStore: { name: string; about: string; shortAbout?: string; icon: string; url: string };
   className?: string;
   invert?: boolean;
   compact?: boolean;
@@ -45,10 +45,15 @@ function AppStoreCard({
           <span className={`block font-semibold ${compact ? "text-lg" : "text-lg sm:text-2xl"}`}>
             {appStore.name}
           </span>
-          <span
-            className={`block ${compact ? "text-base" : "text-sm sm:text-base"} ${invert ? "text-black/50" : "text-white/50"} ${compact ? "truncate" : "line-clamp-2 sm:line-clamp-none"}`}
-          >
-            {appStore.about}
+          <span className={`block ${compact ? "text-base" : "text-sm sm:text-base"} ${invert ? "text-black/50" : "text-white/50"}`}>
+            {compact ? (
+              <span className="block truncate">{appStore.about}</span>
+            ) : (
+              <>
+                <span className="block truncate sm:hidden">{appStore.shortAbout ?? appStore.about}</span>
+                <span className="hidden sm:block">{appStore.about}</span>
+              </>
+            )}
           </span>
         </span>
         <span
@@ -72,7 +77,7 @@ export default function CaseStudy({
   projectTitle,
 }: {
   description: string;
-  appStore?: { name: string; about: string; icon: string; url: string };
+  appStore?: { name: string; about: string; shortAbout?: string; icon: string; url: string };
   credits?: { label: string; value: string }[];
   hero: CaseStudyImage;
   images: CaseStudyImage[];

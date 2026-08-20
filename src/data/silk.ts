@@ -16,6 +16,7 @@ export const silk = {
   appStore: {
     name: "Silk Bank",
     about: "Manage your funds, transfer instantly, and pay — all without commission fees.",
+    shortAbout: "Bank, payments, chat and more",
     icon: `${CDN_BASE}/work/silk/appstore-icon.webp`,
     url: "https://apps.apple.com/us/app/silk-bank/id6463405199",
   },
