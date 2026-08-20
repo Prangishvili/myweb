@@ -21,20 +21,22 @@ export default function Header() {
   const [infoOpen, setInfoOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const [phoneOpen, setPhoneOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [inverted, setInverted] = useState(false);
 
   useEffect(() => {
-    if (!infoOpen && !contactOpen) return;
+    if (!infoOpen && !contactOpen && !menuOpen) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setInfoOpen(false);
         setContactOpen(false);
         setPhoneOpen(false);
+        setMenuOpen(false);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [infoOpen, contactOpen]);
+  }, [infoOpen, contactOpen, menuOpen]);
 
   useEffect(() => {
     function onScroll() {
@@ -62,6 +64,7 @@ export default function Header() {
             setInfoOpen(false);
             setContactOpen(false);
             setPhoneOpen(false);
+            setMenuOpen(false);
           }}
           onMouseEnter={() => dispatchElementHover("brand")}
           onMouseLeave={() => dispatchElementHover(null)}
@@ -69,7 +72,7 @@ export default function Header() {
         >
           {site.name}
         </Link>
-        <div className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap sm:min-w-0 sm:flex-none sm:overflow-visible sm:whitespace-normal sm:col-start-4 sm:col-span-5">
+        <div className="hidden sm:col-start-4 sm:col-span-5 sm:block">
           {navItems.map((item, i) => (
             <span key={item.label}>
               {item.external ? (
@@ -113,7 +116,7 @@ export default function Header() {
           }}
           onMouseEnter={() => dispatchElementHover("Information")}
           onMouseLeave={() => dispatchElementHover(null)}
-          className="shrink-0 uppercase sm:col-span-1 sm:ml-auto hover:opacity-60"
+          className="hidden shrink-0 uppercase sm:col-span-1 sm:ml-auto sm:block hover:opacity-60"
         >
           Information
         </button>
@@ -126,11 +129,76 @@ export default function Header() {
           }}
           onMouseEnter={() => dispatchElementHover("Contact")}
           onMouseLeave={() => dispatchElementHover(null)}
-          className="shrink-0 uppercase sm:col-start-12 sm:ml-auto hover:opacity-60"
+          className="hidden shrink-0 uppercase sm:col-start-12 sm:ml-auto sm:block hover:opacity-60"
         >
           Contact
         </button>
+        <button
+          type="button"
+          onClick={() => {
+            setInfoOpen(false);
+            setContactOpen(false);
+            setPhoneOpen(false);
+            setMenuOpen((open) => !open);
+          }}
+          className="ml-auto shrink-0 uppercase hover:opacity-60 sm:hidden"
+        >
+          Menu
+        </button>
       </header>
+
+      {menuOpen && (
+        <div
+          data-lenis-prevent
+          className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto overscroll-contain bg-[rgba(217,217,217,0.18)] px-6 backdrop-blur-[184px] sm:hidden"
+          onClick={() => setMenuOpen(false)}
+        >
+          <div className="flex flex-col items-center gap-6 text-center font-serif text-3xl leading-[1.3] font-semibold">
+            {navItems.map((item) =>
+              item.external ? (
+                <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => {
+                    setMenuOpen(false);
+                    if (item.label === "Works" && pathname === "/") {
+                      e.preventDefault();
+                      scrollToSection("work");
+                    }
+                  }}
+                  className="hover:opacity-60"
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
+            <button
+              type="button"
+              onClick={() => {
+                setMenuOpen(false);
+                setInfoOpen(true);
+              }}
+              className="hover:opacity-60"
+            >
+              Information
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setMenuOpen(false);
+                setContactOpen(true);
+              }}
+              className="hover:opacity-60"
+            >
+              Contact
+            </button>
+          </div>
+        </div>
+      )}
 
       {infoOpen && (
         <div

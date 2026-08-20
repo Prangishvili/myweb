@@ -444,9 +444,9 @@ export default function FigureHero() {
   }, []);
 
   return (
-    <section className="relative h-[120dvh] w-full bg-white">
+    <section className="relative h-[100dvh] w-full bg-white sm:h-[120dvh]">
       <Canvas dpr={[1, isMobile() ? 1.5 : 2]} gl={{ antialias: true }}>
-        <PerspectiveCamera makeDefault position={[0, 180, 430]} fov={40} near={0.1} far={5000} />
+        <PerspectiveCamera makeDefault position={[0, 180, isMobile() ? 620 : 430]} fov={40} near={0.1} far={5000} />
         <CameraRig />
         <Suspense fallback={null}>
           <Figure repelSettingsRef={repelSettingsRef} />
