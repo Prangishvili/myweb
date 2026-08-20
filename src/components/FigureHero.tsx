@@ -32,8 +32,8 @@ const FLOAT_FREQ_MAX = 0.4;
 // onto the figure's plane) get pushed directly away from it, falling off with distance.
 // Scaled off the head's own bounding radius (not a flat number) so the reach covers
 // most of the figure instead of only a small patch right under the cursor.
-const REPEL_RADIUS_RATIO = 1.7;
-const REPEL_STRENGTH = 0.05;
+const REPEL_RADIUS_RATIO = 0.77;
+const REPEL_STRENGTH = 1.32;
 const REPEL_FALLOFF_EXPONENT = 6;
 
 type RepelSettings = { radiusRatio: number; strength: number; falloffExponent: number };

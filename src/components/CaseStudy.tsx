@@ -46,7 +46,7 @@ function AppStoreCard({
             {appStore.name}
           </span>
           <span
-            className={`block ${compact ? "text-base" : "text-sm sm:text-base"} ${invert ? "text-black/50" : "text-white/50"} ${compact ? "truncate" : ""}`}
+            className={`block ${compact ? "text-base" : "text-sm sm:text-base"} ${invert ? "text-black/50" : "text-white/50"} ${compact ? "truncate" : "line-clamp-2 sm:line-clamp-none"}`}
           >
             {appStore.about}
           </span>
@@ -91,7 +91,7 @@ export default function CaseStudy({
   return (
     <>
       <SmoothScroll />
-      <div className="px-2 pt-20 sm:px-5">
+      <div className="px-2 pt-20">
         <Frame image={hero} />
       </div>
       {appStore && <AppStoreCard appStore={appStore} className="mt-10 mb-6 sm:mt-20 sm:mb-10" />}
@@ -106,7 +106,7 @@ export default function CaseStudy({
       </div>
       <BlurImageGrid
         rows={rows}
-        className={`flex flex-col gap-2.5 px-2 sm:gap-5 sm:px-5 ${credits ? "pb-2 sm:pb-4" : "pb-10 sm:pb-20"}`}
+        className={`flex flex-col gap-2.5 px-2 sm:gap-5 ${credits ? "pb-2 sm:pb-4" : "pb-10 sm:pb-20"}`}
       />
       <div className="bg-white text-black">
         <div id="header-invert-start" />

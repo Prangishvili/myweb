@@ -20,6 +20,7 @@ export default function Header() {
   const pathname = usePathname();
   const [infoOpen, setInfoOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
+  const [phoneOpen, setPhoneOpen] = useState(false);
   const [inverted, setInverted] = useState(false);
 
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function Header() {
       if (e.key === "Escape") {
         setInfoOpen(false);
         setContactOpen(false);
+        setPhoneOpen(false);
       }
     };
     window.addEventListener("keydown", onKey);
@@ -59,6 +61,7 @@ export default function Header() {
           onClick={() => {
             setInfoOpen(false);
             setContactOpen(false);
+            setPhoneOpen(false);
           }}
           onMouseEnter={() => dispatchElementHover("brand")}
           onMouseLeave={() => dispatchElementHover(null)}
@@ -119,6 +122,7 @@ export default function Header() {
           onClick={() => {
             setInfoOpen(false);
             setContactOpen((open) => !open);
+            setPhoneOpen(false);
           }}
           onMouseEnter={() => dispatchElementHover("Contact")}
           onMouseLeave={() => dispatchElementHover(null)}
@@ -155,28 +159,56 @@ export default function Header() {
         <div
           data-lenis-prevent
           className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto overscroll-contain bg-[rgba(217,217,217,0.18)] px-6 backdrop-blur-[184px] sm:px-10"
-          onClick={() => setContactOpen(false)}
+          onClick={() => {
+            setContactOpen(false);
+            setPhoneOpen(false);
+          }}
         >
           <div className="flex flex-col gap-6 text-center font-serif text-2xl leading-[1.3] font-semibold sm:gap-10 sm:text-[48px]">
             <p onClick={(e) => e.stopPropagation()}>Let&apos;s talk</p>
             <p onClick={(e) => e.stopPropagation()}>
               {site.links.map((link, i) => {
                 const external = link.href.startsWith("http");
+                const isPhone = link.href.startsWith("tel:");
                 return (
                   <span key={link.label}>
-                    <a
-                      href={link.href}
-                      target={external ? "_blank" : undefined}
-                      rel={external ? "noopener noreferrer" : undefined}
-                      className="hover:opacity-60"
-                    >
-                      {link.label}
-                    </a>
+                    {isPhone ? (
+                      <button type="button" onClick={() => setPhoneOpen((open) => !open)} className="hover:opacity-60">
+                        {link.label}
+                      </button>
+                    ) : (
+                      <a
+                        href={link.href}
+                        target={external ? "_blank" : undefined}
+                        rel={external ? "noopener noreferrer" : undefined}
+                        className="hover:opacity-60"
+                      >
+                        {link.label}
+                      </a>
+                    )}
                     {i < site.links.length - 1 && <span>, </span>}
                   </span>
                 );
               })}
             </p>
+            {phoneOpen && (
+              <p
+                className="flex justify-center gap-6 rounded-2xl bg-black/5 px-6 py-4 text-base font-sans font-semibold uppercase sm:gap-10 sm:px-10 sm:py-6 sm:text-xl"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <a href={site.links[0].href} className="hover:opacity-60">
+                  Call
+                </a>
+                <a
+                  href={`https://wa.me/${site.links[0].href.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:opacity-60"
+                >
+                  WhatsApp
+                </a>
+              </p>
+            )}
           </div>
         </div>
       )}
