@@ -9,7 +9,7 @@ export default function MotionWorksGrid({ showreel }: { showreel: string[] }) {
   const videoIndex = searchParams.get("video");
 
   return (
-    <div className="grid grid-cols-3 gap-2 px-2 pt-20 pb-2 sm:gap-2.5 sm:px-2.5 sm:pb-2.5">
+    <div className="grid grid-cols-1 gap-2 px-2 pt-20 pb-2 sm:grid-cols-3 sm:gap-2.5 sm:px-2.5 sm:pb-2.5">
       {showreel.map((src, index) => (
         <Reveal key={src} delay={(index % 3) * 80}>
           <MotionWorkVideo src={src} index={index} autoOpen={videoIndex === String(index)} />
