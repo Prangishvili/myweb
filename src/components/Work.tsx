@@ -40,8 +40,14 @@ export default function Work() {
           </div>
         );
 
+        const external = item.href?.startsWith("http");
         const tile = item.href ? (
-          <Link key={item.title} href={item.href}>
+          <Link
+            key={item.title}
+            href={item.href}
+            target={external ? "_blank" : undefined}
+            rel={external ? "noopener noreferrer" : undefined}
+          >
             {cover}
           </Link>
         ) : (

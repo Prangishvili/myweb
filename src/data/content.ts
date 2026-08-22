@@ -105,6 +105,7 @@ export const work: WorkItem[] = [
     title: "Kao",
     video: `${CDN_BASE}/work/kao/cover.mp4`,
     poster: `${CDN_BASE}/work/kao/cover.webp`,
+    href: "https://kao.furniture/",
   },
   {
     title: "Shuko",

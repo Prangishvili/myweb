@@ -48,9 +48,16 @@ export default function ProjectSlider({ currentProjectTitle }: ProjectSliderProp
             </div>
           );
 
+          const external = item.href?.startsWith("http");
           return (
             <Reveal key={item.title} delay={(index % 2) * 80}>
-              {item.href ? <Link href={item.href}>{tile}</Link> : tile}
+              {item.href ? (
+                <Link href={item.href} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined}>
+                  {tile}
+                </Link>
+              ) : (
+                tile
+              )}
             </Reveal>
           );
         })}
