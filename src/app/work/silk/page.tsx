@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function SilkPage() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="text-white">
       <Header />
       <PageTransition>
         <main className="flex-1 pb-20">
@@ -22,6 +22,7 @@ export default function SilkPage() {
             hero={silk.hero}
             images={silk.images}
             projectTitle={silk.title}
+            dark
           />
         </main>
       </PageTransition>

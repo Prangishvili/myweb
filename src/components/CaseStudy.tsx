@@ -8,7 +8,7 @@ import CoveredImage from "@/components/CoveredImage";
 function Frame({ image }: { image: CaseStudyImage }) {
   return (
     <div className="relative w-full overflow-hidden" style={{ aspectRatio: image.aspect }}>
-      <CoveredImage src={image.src} alt="" flip={image.flip} />
+      <CoveredImage src={image.src} alt="" flip={image.flip} priority />
     </div>
   );
 }
@@ -75,6 +75,7 @@ export default function CaseStudy({
   hero,
   images,
   projectTitle,
+  dark = false,
 }: {
   description: string;
   appStore?: { name: string; about: string; shortAbout?: string; icon: string; url: string };
@@ -82,6 +83,7 @@ export default function CaseStudy({
   hero: CaseStudyImage;
   images: CaseStudyImage[];
   projectTitle?: string;
+  dark?: boolean;
 }) {
   const rows: CaseStudyImage[][] = [];
   for (let i = 0; i < images.length; i++) {
@@ -96,23 +98,25 @@ export default function CaseStudy({
   return (
     <>
       <SmoothScroll />
-      <div className="px-2 pt-20">
-        <Frame image={hero} />
+      <div className={dark ? "bg-black text-white" : undefined}>
+        <div className="px-2 pt-20">
+          <Frame image={hero} />
+        </div>
+        {appStore && <AppStoreCard appStore={appStore} className="mt-10 mb-6 sm:mt-20 sm:mb-10" />}
+        <div
+          className={`mx-auto max-w-[1050px] px-3 pb-10 sm:px-10 sm:pb-20 ${appStore ? "" : "pt-10 sm:pt-20"}`}
+        >
+          {description.split("\n\n").map((paragraph, i) => (
+            <p key={i} className="text-lg leading-[1.7] last:mb-0 mb-6 sm:mb-8 sm:text-2xl sm:leading-[1.65]">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+        <BlurImageGrid
+          rows={rows}
+          className={`flex flex-col gap-2.5 px-2 sm:gap-5 ${credits ? "pb-2 sm:pb-4" : "pb-10 sm:pb-20"}`}
+        />
       </div>
-      {appStore && <AppStoreCard appStore={appStore} className="mt-10 mb-6 sm:mt-20 sm:mb-10" />}
-      <div
-        className={`mx-auto max-w-[1050px] px-3 pb-10 sm:px-10 sm:pb-20 ${appStore ? "" : "pt-10 sm:pt-20"}`}
-      >
-        {description.split("\n\n").map((paragraph, i) => (
-          <p key={i} className="text-lg leading-[1.7] last:mb-0 mb-6 sm:mb-8 sm:text-2xl sm:leading-[1.65]">
-            {paragraph}
-          </p>
-        ))}
-      </div>
-      <BlurImageGrid
-        rows={rows}
-        className={`flex flex-col gap-2.5 px-2 sm:gap-5 ${credits ? "pb-2 sm:pb-4" : "pb-10 sm:pb-20"}`}
-      />
       <div className="bg-white text-black">
         <div id="header-invert-start" />
         {credits && (

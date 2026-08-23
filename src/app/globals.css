@@ -9,24 +9,22 @@ body {
   font-family: var(--font-switzer), Arial, Helvetica, sans-serif;
 }
 
-/* Page navigation depth cue: outgoing page fades + scales down slightly,
-   incoming page fades + scales up to 100%. */
+/* Page navigation: a plain, quick crossfade — no scale/slide, so it doesn't
+   fight with content (like images) animating in on its own underneath. */
 ::view-transition-old(.page-fade-scale) {
-  animation: 260ms ease-in both page-fade-scale-out;
+  animation: 150ms ease-in both page-fade-out;
 }
 ::view-transition-new(.page-fade-scale) {
-  animation: 320ms ease-out both page-fade-scale-in;
+  animation: 200ms ease-out both page-fade-in;
 }
-@keyframes page-fade-scale-out {
+@keyframes page-fade-out {
   to {
     opacity: 0;
-    scale: 0.97;
   }
 }
-@keyframes page-fade-scale-in {
+@keyframes page-fade-in {
   from {
     opacity: 0;
-    scale: 1.03;
   }
 }
 

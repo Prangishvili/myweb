@@ -18,7 +18,7 @@ export default function ProjectSlider({ currentProjectTitle }: ProjectSliderProp
       <div className="mx-[0.5rem] mb-8 text-center sm:mx-[0.5rem] sm:mb-12">
         <h2 className="text-4xl font-semibold sm:text-6xl">Next Project</h2>
       </div>
-      <div className="grid grid-cols-1 gap-[0.5rem] px-[0.5rem] sm:grid-cols-2 sm:gap-5 sm:px-[0.5rem]">
+      <div className="grid grid-cols-1 gap-[0.5rem] px-[0.5rem] sm:grid-cols-2 sm:px-[0.5rem]">
         {projects.slice(0, 4).map((item, index) => {
           const tile = (
             <div
