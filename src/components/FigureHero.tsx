@@ -6,6 +6,7 @@ import { PerspectiveCamera, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { VERTEX_COLORS } from "@/data/palette";
 import { CDN_BASE } from "@/data/cdn";
+import { scrollToSection } from "@/components/SmoothScroll";
 
 const isMobile = () => typeof window !== "undefined" && window.innerWidth < 768;
 
@@ -445,7 +446,12 @@ export default function FigureHero() {
 
   return (
     <section className="relative h-[100dvh] w-full bg-white sm:h-[120dvh]">
-      <Canvas dpr={[1, isMobile() ? 1.5 : 2]} gl={{ antialias: true }}>
+      <Canvas
+        dpr={[1, isMobile() ? 1.5 : 2]}
+        gl={{ antialias: true }}
+        className="cursor-pointer"
+        onClick={() => scrollToSection("work")}
+      >
         <PerspectiveCamera makeDefault position={[0, 180, isMobile() ? 620 : 430]} fov={40} near={0.1} far={5000} />
         <CameraRig />
         <Suspense fallback={null}>

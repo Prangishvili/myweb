@@ -22,21 +22,23 @@ export default function Header() {
   const [contactOpen, setContactOpen] = useState(false);
   const [phoneOpen, setPhoneOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [exhibitionOpen, setExhibitionOpen] = useState(false);
   const [inverted, setInverted] = useState(false);
 
   useEffect(() => {
-    if (!infoOpen && !contactOpen && !menuOpen) return;
+    if (!infoOpen && !contactOpen && !menuOpen && !exhibitionOpen) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setInfoOpen(false);
         setContactOpen(false);
         setPhoneOpen(false);
         setMenuOpen(false);
+        setExhibitionOpen(false);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [infoOpen, contactOpen, menuOpen]);
+  }, [infoOpen, contactOpen, menuOpen, exhibitionOpen]);
 
   useEffect(() => {
     function onScroll() {
@@ -65,6 +67,7 @@ export default function Header() {
             setContactOpen(false);
             setPhoneOpen(false);
             setMenuOpen(false);
+            setExhibitionOpen(false);
           }}
           onMouseEnter={() => dispatchElementHover("brand")}
           onMouseLeave={() => dispatchElementHover(null)}
@@ -75,7 +78,21 @@ export default function Header() {
         <div className="hidden sm:col-start-4 sm:col-span-5 sm:block">
           {navItems.map((item, i) => (
             <span key={item.label}>
-              {item.external ? (
+              {item.label === "Exhibition" ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setInfoOpen(false);
+                    setContactOpen(false);
+                    setExhibitionOpen((open) => !open);
+                  }}
+                  onMouseEnter={() => dispatchElementHover(item.label)}
+                  onMouseLeave={() => dispatchElementHover(null)}
+                  className="uppercase hover:opacity-60"
+                >
+                  {item.label}
+                </button>
+              ) : item.external ? (
                 <a
                   href={item.href}
                   target="_blank"
@@ -112,6 +129,7 @@ export default function Header() {
           type="button"
           onClick={() => {
             setContactOpen(false);
+            setExhibitionOpen(false);
             setInfoOpen((open) => !open);
           }}
           onMouseEnter={() => dispatchElementHover("Information")}
@@ -124,8 +142,9 @@ export default function Header() {
           type="button"
           onClick={() => {
             setInfoOpen(false);
-            setContactOpen((open) => !open);
             setPhoneOpen(false);
+            setExhibitionOpen(false);
+            setContactOpen((open) => !open);
           }}
           onMouseEnter={() => dispatchElementHover("Contact")}
           onMouseLeave={() => dispatchElementHover(null)}
@@ -139,6 +158,7 @@ export default function Header() {
             setInfoOpen(false);
             setContactOpen(false);
             setPhoneOpen(false);
+            setExhibitionOpen(false);
             setMenuOpen((open) => !open);
           }}
           className="ml-auto shrink-0 uppercase hover:opacity-60 sm:hidden"
@@ -155,7 +175,19 @@ export default function Header() {
         >
           <div className="flex flex-col items-center gap-6 text-center font-serif text-3xl leading-[1.3] font-semibold">
             {navItems.map((item) =>
-              item.external ? (
+              item.label === "Exhibition" ? (
+                <button
+                  key={item.label}
+                  type="button"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    setExhibitionOpen(true);
+                  }}
+                  className="hover:opacity-60"
+                >
+                  {item.label}
+                </button>
+              ) : item.external ? (
                 <a key={item.label} href={item.href} target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
                   {item.label}
                 </a>
@@ -197,6 +229,24 @@ export default function Header() {
               Contact
             </button>
           </div>
+        </div>
+      )}
+
+      {exhibitionOpen && (
+        <div
+          data-lenis-prevent
+          className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto overscroll-contain bg-[rgba(217,217,217,0.18)] px-6 backdrop-blur-[184px] sm:px-10"
+          onClick={() => setExhibitionOpen(false)}
+        >
+          <p
+            className="max-w-2xl text-center font-serif text-2xl leading-[1.3] font-semibold sm:text-[48px]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            To visit the exhibition, go to{" "}
+            <a href="https://reply.gallery" target="_blank" rel="noopener noreferrer" className="hover:opacity-60">
+              reply.gallery
+            </a>
+          </p>
         </div>
       )}
 

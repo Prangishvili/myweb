@@ -11,7 +11,7 @@ export default function Work() {
   return (
     <section
       id="work"
-      className="grid scroll-mt-28 grid-cols-1 gap-[0.5rem] min-[900px]:grid-cols-2 sm:scroll-mt-36 mx-[0.5rem] mb-24"
+      className="grid scroll-mt-12 grid-cols-1 gap-[0.5rem] min-[900px]:grid-cols-2 sm:scroll-mt-16 mx-[0.5rem] mb-24"
     >
       {work.map((item, index) => {
         const cover = (
