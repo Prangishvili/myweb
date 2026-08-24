@@ -8,7 +8,7 @@ import PageTransition from "@/components/PageTransition";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Motion Works — Oto Prangi | Motion Design & Animation",
+  title: "Motion Works, Oto Prangi | Motion Design & Animation",
   description:
     "Curated collection of motion design and animation work showcasing digital product design, user interface animations, and creative motion graphics.",
 };

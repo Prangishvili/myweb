@@ -5,7 +5,7 @@ import { silk } from "@/data/silk";
 import PageTransition from "@/components/PageTransition";
 
 export const metadata: Metadata = {
-  title: `${silk.title} — Oto Prangi`,
+  title: `${silk.title}, Oto Prangi`,
   description: silk.description,
 };
 

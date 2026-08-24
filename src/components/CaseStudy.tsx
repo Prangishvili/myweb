@@ -123,8 +123,8 @@ export default function CaseStudy({
           <div className="mx-auto flex max-w-[1050px] flex-col items-center gap-6 px-3 pt-20 pb-6 text-center sm:gap-8 sm:px-10 sm:pt-32 sm:pb-10">
             {credits.map((credit) => (
               <div key={credit.label}>
-                <p className="text-base font-semibold text-black/40 sm:text-xl">{credit.label}</p>
-                <p className="text-xl font-semibold sm:text-3xl">{credit.value}</p>
+                <p className="text-lg font-semibold text-black/40 sm:text-2xl">{credit.label}</p>
+                <p className="text-lg font-semibold sm:text-2xl">{credit.value}</p>
               </div>
             ))}
           </div>

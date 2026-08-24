@@ -5,7 +5,7 @@ import { tomorrow } from "@/data/tomorrow";
 import PageTransition from "@/components/PageTransition";
 
 export const metadata: Metadata = {
-  title: `${tomorrow.title} — Oto Prangi`,
+  title: `${tomorrow.title}, Oto Prangi`,
   description: tomorrow.description,
 };
 

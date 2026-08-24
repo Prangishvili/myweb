@@ -5,7 +5,7 @@ import { CDN_BASE } from "@/data/cdn";
 import PageTransition from "@/components/PageTransition";
 
 export const metadata: Metadata = {
-  title: "Inspiration — Oto Prangi",
+  title: "Inspiration, Oto Prangi",
 };
 
 export default function InspirationPage() {

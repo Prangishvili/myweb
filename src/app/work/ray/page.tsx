@@ -5,7 +5,7 @@ import { ray } from "@/data/ray";
 import PageTransition from "@/components/PageTransition";
 
 export const metadata: Metadata = {
-  title: `${ray.title} — Oto Prangi`,
+  title: `${ray.title}, Oto Prangi`,
   description: ray.description,
 };
 

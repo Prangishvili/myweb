@@ -4,7 +4,7 @@ import Work from "@/components/Work";
 import PageTransition from "@/components/PageTransition";
 
 export const metadata: Metadata = {
-  title: "Work — Oto Prangi | Product Design & Design Systems",
+  title: "Work, Oto Prangi | Product Design & Design Systems",
   description:
     "Portfolio of product design work including design systems, digital products, and user experiences. View case studies and design projects.",
 };

@@ -15,7 +15,7 @@ const switzer = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://otoprangi.com"),
-  title: "Oto Prangi — Senior Product Designer & Design Systems Expert",
+  title: "Oto Prangi",
   description:
     "Senior Product Designer with 15+ years crafting user interfaces, design systems, and digital products. Specializing in product design, creative direction, and human-centered experiences.",
   keywords: ["Product Designer", "UI/UX Designer", "Design Systems", "Digital Products", "Tbilisi"],

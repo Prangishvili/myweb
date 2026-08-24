@@ -21,6 +21,15 @@ export function scrollToSection(id: string) {
 
 export default function SmoothScroll() {
   useEffect(() => {
+    // Next's scroll-to-top on navigation can race with this mounting (or get
+    // skipped entirely under the View Transition flow), leaving the native
+    // scroll position wherever the previous page left it. Lenis reads that
+    // native position as its own starting point, so force it to 0 first —
+    // otherwise a fresh case-study page can open already scrolled down.
+    // Must be instant: an animated native scroll running mid-<ViewTransition>
+    // conflicts with the browser's snapshot and can hang the navigation.
+    if (!window.location.hash) window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+
     const lenis = new Lenis({
       duration: 0.9,
       easing: (t) => Math.min(1, 1 - Math.pow(2, -10 * t)),

@@ -5,7 +5,7 @@ import { aisi } from "@/data/aisi";
 import PageTransition from "@/components/PageTransition";
 
 export const metadata: Metadata = {
-  title: `${aisi.title} — Oto Prangi`,
+  title: `${aisi.title}, Oto Prangi`,
   description: aisi.description,
 };
 

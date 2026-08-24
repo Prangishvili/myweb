@@ -7,6 +7,11 @@
 
 body {
   font-family: var(--font-switzer), Arial, Helvetica, sans-serif;
+  /* Prevent mobile browsers from auto-boosting the font size of longer text
+     blocks (e.g. a long credits value line rendering bigger than short ones
+     right next to it) relative to shorter neighboring text. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 /* Page navigation: a plain, quick crossfade — no scale/slide, so it doesn't

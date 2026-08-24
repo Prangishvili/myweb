@@ -5,7 +5,7 @@ import { shuko } from "@/data/shuko";
 import PageTransition from "@/components/PageTransition";
 
 export const metadata: Metadata = {
-  title: `${shuko.title} — Oto Prangi`,
+  title: `${shuko.title}, Oto Prangi`,
   description: shuko.description,
 };
 
