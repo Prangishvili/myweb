@@ -459,11 +459,16 @@ export default function FigureHero() {
         </Suspense>
       </Canvas>
       <div className="pointer-events-none absolute inset-x-0 bottom-12 z-10 flex flex-col items-center px-6 text-center font-serif text-[22px] font-semibold leading-[1.25] sm:bottom-16 sm:px-10 sm:text-[32px]">
-        <p className="max-w-3xl">
+        <h1 className="max-w-3xl">
           Leading design where the discipline lines blur —
           <br />
           AI, systems, brand, space.
-        </p>
+          <span className="sr-only">
+            {" "}
+            Oto Prangi is a UI and product designer based in Tbilisi, Georgia, working remotely with design teams in
+            New York.
+          </span>
+        </h1>
       </div>
       {panelVisible && <RepelDebugPanel repelSettingsRef={repelSettingsRef} />}
     </section>

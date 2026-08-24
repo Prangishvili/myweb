@@ -7,6 +7,15 @@ export default function SchemaMarkup() {
     email: "hello@otoprangi.com",
     telephone: "+995 593 26 11 77",
     jobTitle: "Senior Product Designer",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Tbilisi",
+      addressCountry: "GE",
+    },
+    workLocation: [
+      { "@type": "Place", address: { "@type": "PostalAddress", addressLocality: "Tbilisi", addressCountry: "GE" } },
+      { "@type": "Place", address: { "@type": "PostalAddress", addressLocality: "New York", addressRegion: "NY", addressCountry: "US" } },
+    ],
     knowsAbout: [
       "Product Design",
       "UI/UX Design",

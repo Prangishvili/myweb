@@ -14,24 +14,33 @@ const switzer = localFont({
   ],
 });
 
+const TITLE = "Oto Prangi — UI/Product Designer in Tbilisi";
+const DESCRIPTION =
+  "UI and product designer based in Tbilisi, Georgia, working remotely with teams in New York. Interfaces, design systems, motion, and brand identity.";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://otoprangi.com"),
-  title: "Oto Prangi",
-  description:
-    "Product designer working across interfaces, design systems, motion, and brand identity.",
-  keywords: ["Product Designer", "UI/UX Designer", "Design Systems", "Digital Products", "Tbilisi"],
+  title: TITLE,
+  description: DESCRIPTION,
+  keywords: [
+    "UI Designer Tbilisi",
+    "Product Designer Tbilisi",
+    "UI/UX Designer",
+    "Design Systems",
+    "Digital Products",
+    "Tbilisi",
+    "Georgia",
+  ],
   openGraph: {
-    title: "Oto Prangi",
-    description:
-      "Product designer working across interfaces, design systems, motion, and brand identity.",
+    title: TITLE,
+    description: DESCRIPTION,
     images: [`${CDN_BASE}/og-image.jpg`],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Oto Prangi",
-    description:
-      "Product designer working across interfaces, design systems, motion, and brand identity.",
+    title: TITLE,
+    description: DESCRIPTION,
     images: [`${CDN_BASE}/og-image.jpg`],
   },
 };
