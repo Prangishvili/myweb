@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import SchemaMarkup from "@/components/SchemaMarkup";
 import { CDN_BASE } from "@/data/cdn";
 import "./globals.css";
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SchemaMarkup />
       </head>
       <body className="min-h-full flex flex-col bg-white text-black">{children}</body>
+      <GoogleAnalytics gaId="G-L37RL2QB78" />
     </html>
   );
 }
