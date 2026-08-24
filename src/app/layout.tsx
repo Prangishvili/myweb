@@ -17,20 +17,20 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://otoprangi.com"),
   title: "Oto Prangi",
   description:
-    "Senior Product Designer with 15+ years crafting user interfaces, design systems, and digital products. Specializing in product design, creative direction, and human-centered experiences.",
+    "Product designer working across interfaces, design systems, motion, and brand identity.",
   keywords: ["Product Designer", "UI/UX Designer", "Design Systems", "Digital Products", "Tbilisi"],
   openGraph: {
-    title: "Oto Prangi — Senior Product Designer",
+    title: "Oto Prangi",
     description:
-      "Senior Product Designer with 15+ years of experience in creating digital products and design systems.",
+      "Product designer working across interfaces, design systems, motion, and brand identity.",
     images: [`${CDN_BASE}/og-image.jpg`],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Oto Prangi — Senior Product Designer",
+    title: "Oto Prangi",
     description:
-      "Senior Product Designer with 15+ years of experience in creating digital products and design systems.",
+      "Product designer working across interfaces, design systems, motion, and brand identity.",
     images: [`${CDN_BASE}/og-image.jpg`],
   },
 };
