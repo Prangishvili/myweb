@@ -14,7 +14,7 @@ const switzer = localFont({
   ],
 });
 
-const TITLE = "Oto Prangi — UI/Product Designer in Tbilisi";
+const TITLE = "Oto Prangi";
 const DESCRIPTION =
   "UI and product designer based in Tbilisi, Georgia, working remotely with teams in New York. Interfaces, design systems, motion, and brand identity.";
 

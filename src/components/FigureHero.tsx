@@ -97,11 +97,13 @@ function VertexImages({
   hoveredRef,
   figureGroupRef,
   repelSettingsRef,
+  scattered = false,
 }: {
   scene: THREE.Object3D;
   hoveredRef: React.RefObject<string | null>;
   figureGroupRef: React.RefObject<THREE.Group | null>;
   repelSettingsRef: React.RefObject<RepelSettings>;
+  scattered?: boolean;
 }) {
   const count = isMobile() ? 150 : 300;
   const allVertices = useMemo(() => collectVertexPositions(scene), [scene]);
@@ -260,7 +262,7 @@ function VertexImages({
 
       const { delay } = introTiming[i];
       const settleBias = delay / INTRO_STAGGER; // 0..~1, reused as a per-sprite settle-speed offset
-      const targetIntroT = hovered !== null ? 0 : 1;
+      const targetIntroT = scattered ? 0 : hovered !== null ? 0 : 1;
       const staggerEase = Math.min(1, introTriggerEase * (1.4 - settleBias * 0.8));
       currentIntroT[i] += (targetIntroT - currentIntroT[i]) * staggerEase;
       const introT = currentIntroT[i];
@@ -328,7 +330,13 @@ function VertexImages({
 }
 
 // ── Figure ─────────────────────────────────────────────────────────────────
-function Figure({ repelSettingsRef }: { repelSettingsRef: React.RefObject<RepelSettings> }) {
+function Figure({
+  repelSettingsRef,
+  scattered = false,
+}: {
+  repelSettingsRef: React.RefObject<RepelSettings>;
+  scattered?: boolean;
+}) {
   const { scene } = useGLTF(`${CDN_BASE}/figure.glb`);
 
   const groupRef = useRef<THREE.Group>(null);
@@ -363,7 +371,13 @@ function Figure({ repelSettingsRef }: { repelSettingsRef: React.RefObject<RepelS
 
   return (
     <group ref={groupRef} scale={200}>
-      <VertexImages scene={scene} hoveredRef={hoveredRef} figureGroupRef={groupRef} repelSettingsRef={repelSettingsRef} />
+      <VertexImages
+        scene={scene}
+        hoveredRef={hoveredRef}
+        figureGroupRef={groupRef}
+        repelSettingsRef={repelSettingsRef}
+        scattered={scattered}
+      />
     </group>
   );
 }
@@ -406,7 +420,20 @@ function RepelDebugPanel({ repelSettingsRef }: { repelSettingsRef: React.RefObje
   );
 }
 
-export default function FigureHero() {
+export default function FigureHero({
+  scattered = false,
+  caption,
+  captionPosition = "bottom",
+  height = "hero",
+  onCanvasClick,
+}: {
+  scattered?: boolean;
+  caption?: React.ReactNode;
+  captionPosition?: "bottom" | "center";
+  height?: "hero" | "full";
+  onCanvasClick?: () => void;
+} = {}) {
+  const handleCanvasClick = onCanvasClick ?? (scattered ? undefined : () => scrollToSection("work"));
   const repelSettingsRef = useRef<RepelSettings>({
     radiusRatio: REPEL_RADIUS_RATIO,
     strength: REPEL_STRENGTH,
@@ -445,29 +472,37 @@ export default function FigureHero() {
   }, []);
 
   return (
-    <section className="relative h-[100dvh] w-full bg-white sm:h-[120dvh]">
+    <section className={`relative w-full bg-white ${height === "full" ? "h-[100vh]" : "h-[100dvh] sm:h-[120dvh]"}`}>
       <Canvas
         dpr={[1, isMobile() ? 1.5 : 2]}
         gl={{ antialias: true }}
-        className="cursor-pointer"
-        onClick={() => scrollToSection("work")}
+        className={handleCanvasClick ? "cursor-pointer" : undefined}
+        onClick={handleCanvasClick}
       >
         <PerspectiveCamera makeDefault position={[0, 180, isMobile() ? 620 : 430]} fov={40} near={0.1} far={5000} />
         <CameraRig />
         <Suspense fallback={null}>
-          <Figure repelSettingsRef={repelSettingsRef} />
+          <Figure repelSettingsRef={repelSettingsRef} scattered={scattered} />
         </Suspense>
       </Canvas>
-      <div className="pointer-events-none absolute inset-x-0 bottom-12 z-10 flex flex-col items-center px-6 text-center font-serif text-[22px] font-semibold leading-[1.25] sm:bottom-16 sm:px-10 sm:text-[32px]">
+      <div
+        className={`pointer-events-none absolute z-10 flex flex-col items-center px-6 text-center font-serif text-[22px] font-semibold leading-[1.25] sm:px-10 sm:text-[32px] ${
+          captionPosition === "center" ? "inset-0 justify-center" : "inset-x-0 bottom-12 sm:bottom-16"
+        }`}
+      >
         <h1 className="max-w-3xl">
-          Leading design where the discipline lines blur —
-          <br />
-          AI, systems, brand, space.
-          <span className="sr-only">
-            {" "}
-            Oto Prangi is a UI and product designer based in Tbilisi, Georgia, working remotely with design teams in
-            New York.
-          </span>
+          {caption ?? (
+            <>
+              Leading design where the discipline lines blur —
+              <br />
+              AI, systems, brand, space.
+              <span className="sr-only">
+                {" "}
+                Oto Prangi is a UI and product designer based in Tbilisi, Georgia, working remotely with design teams
+                in New York.
+              </span>
+            </>
+          )}
         </h1>
       </div>
       {panelVisible && <RepelDebugPanel repelSettingsRef={repelSettingsRef} />}
