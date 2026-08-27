@@ -12,10 +12,6 @@ export const site = {
 
 export const cv: { heading: string; items: string[] }[] = [
   {
-    heading: "Education",
-    items: ["2017–2021 B.A. Visual and Performing Arts, Georgian Institute of Public Affairs"],
-  },
-  {
     heading: "Experience",
     items: [
       "2026 Inspiration, Digital Product Designer, New York, United States",
