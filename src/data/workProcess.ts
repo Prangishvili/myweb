@@ -5,6 +5,7 @@ export type WorkProcessDoc = {
   title: string;
   description: string;
   file: string;
+  files?: { label: string; file: string }[];
 };
 
 export const workProcessDocs: WorkProcessDoc[] = [
@@ -55,5 +56,9 @@ export const workProcessDocs: WorkProcessDoc[] = [
     title: "Videoshops App Guidelines and Research",
     description: "Work process document by Oto Prangi.",
     file: `${CDN_BASE}/work-process/videoshops-app-guidelines-and-research.pdf`,
+    files: [
+      { label: "Guidelines & Research", file: `${CDN_BASE}/work-process/videoshops-app-guidelines-and-research.pdf` },
+      { label: "Visual Direction for App PT1", file: `${CDN_BASE}/work-process/visual-direction-for-app-pt1.pdf` },
+    ],
   },
 ];
