@@ -16,6 +16,12 @@ export const workProcessDocs: WorkProcessDoc[] = [
     file: `${CDN_BASE}/work-process/information-architecture.pdf`,
   },
   {
+    slug: "information-architecture-silk",
+    title: "Information Architecture - Silk",
+    description: "Work process document by Oto Prangi.",
+    file: `${CDN_BASE}/work-process/information-architecture-silk.pdf`,
+  },
+  {
     slug: "maestro",
     title: "Maestro",
     description: "Work process document by Oto Prangi.",
