@@ -97,12 +97,14 @@ function VertexImages({
   hoveredRef,
   figureGroupRef,
   repelSettingsRef,
+  pointerActiveRef,
   scattered = false,
 }: {
   scene: THREE.Object3D;
   hoveredRef: React.RefObject<string | null>;
   figureGroupRef: React.RefObject<THREE.Group | null>;
   repelSettingsRef: React.RefObject<RepelSettings>;
+  pointerActiveRef: React.RefObject<boolean>;
   scattered?: boolean;
 }) {
   const count = isMobile() ? 150 : 300;
@@ -241,7 +243,7 @@ function VertexImages({
     // sits) was the bug behind the repulsion feeling lopsided — the group's
     // origin doesn't coincide with the head's center once rotated.
     let hasMouseTarget = false;
-    if (figureGroupRef.current) {
+    if (figureGroupRef.current && pointerActiveRef.current) {
       worldCentroid.copy(centroid);
       figureGroupRef.current.localToWorld(worldCentroid);
       state.camera.getWorldDirection(camDir);
@@ -342,14 +344,27 @@ function Figure({
   const groupRef = useRef<THREE.Group>(null);
   const pointer = useRef({ x: 0, y: 0 });
   const hoveredRef = useRef<string | null>(null);
+  // R3F's own `state.pointer` defaults to (0,0) — screen center — until a real
+  // pointer event fires. On touch devices nothing moves the pointer before the
+  // first tap, so the cursor-repulsion effect below would otherwise fire against
+  // a phantom cursor sitting dead-center on load. Gate it on a real interaction.
+  const pointerActiveRef = useRef(false);
 
   useEffect(() => {
     const onPointerMove = (e: PointerEvent) => {
       pointer.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       pointer.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      pointerActiveRef.current = true;
+    };
+    const onPointerDown = () => {
+      pointerActiveRef.current = true;
     };
     window.addEventListener("pointermove", onPointerMove);
-    return () => window.removeEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerdown", onPointerDown);
+    };
   }, []);
 
   useEffect(() => {
@@ -376,6 +391,7 @@ function Figure({
         hoveredRef={hoveredRef}
         figureGroupRef={groupRef}
         repelSettingsRef={repelSettingsRef}
+        pointerActiveRef={pointerActiveRef}
         scattered={scattered}
       />
     </group>
