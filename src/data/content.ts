@@ -96,12 +96,14 @@ export const work: WorkItem[] = [
     video: `${CDN_BASE}/work/inspiration/cover.m4v`,
     poster: `${CDN_BASE}/work/inspiration/cover.webp`,
     href: "/work/inspiration",
+    bg: "#fff",
   },
   {
     title: "Kao",
     video: `${CDN_BASE}/work/kao/cover.mp4`,
     poster: `${CDN_BASE}/work/kao/cover.webp`,
     href: "https://kao.furniture/",
+    bg: "#fff",
   },
   {
     title: "Shuko",
