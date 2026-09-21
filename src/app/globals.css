@@ -5,6 +5,14 @@
   --font-serif: var(--font-switzer);
 }
 
+html {
+  /* Keep viewport width identical whether or not a page needs a scrollbar —
+     otherwise a page-to-page View Transition crossfades two screenshots of
+     different widths, exposing a hairline seam (rendered black) at the edge
+     where they don't overlap. */
+  scrollbar-gutter: stable;
+}
+
 body {
   font-family: var(--font-switzer), Arial, Helvetica, sans-serif;
   /* Prevent mobile browsers from auto-boosting the font size of longer text
@@ -21,6 +29,12 @@ body {
 }
 ::view-transition-new(.page-fade-scale) {
   animation: 200ms ease-out both page-fade-in;
+}
+/* Belt-and-braces: if the two snapshots ever mismatch in size anyway, the gap
+   between them should read as page background, not the browser's black
+   default compositor color. */
+::view-transition-group(.page-fade-scale) {
+  background-color: white;
 }
 @keyframes page-fade-out {
   to {

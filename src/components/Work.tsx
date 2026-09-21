@@ -24,7 +24,7 @@ export default function Work() {
                 src={item.video}
                 poster={item.poster!}
                 alt={item.title}
-                className="size-full object-contain"
+                className="size-full object-cover"
               />
             ) : item.hoverImages ? (
               <ShuffleImage cover={item.image!} images={item.hoverImages} alt={item.title} />
