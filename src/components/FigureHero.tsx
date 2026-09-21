@@ -1,6 +1,7 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Component, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
@@ -331,6 +332,41 @@ function VertexImages({
   );
 }
 
+// A failed glb fetch (transient network blip, dropped connection) gets cached as a
+// rejected promise by three's loader, so every future mount would rethrow the same
+// stale failure with no fallback UI. This boundary clears that cache entry and
+// retries once; if it still fails, it renders nothing instead of crashing the page.
+const FIGURE_LOAD_MAX_ATTEMPTS = 3;
+const FIGURE_LOAD_RETRY_DELAY_MS = 800; // multiplied by attempt number, so retries back off
+
+class FigureErrorBoundary extends Component<{ url: string; children: ReactNode }, { failed: boolean; attempt: number }> {
+  state = { failed: false, attempt: 0 };
+  private retryTimeout: ReturnType<typeof setTimeout> | undefined;
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  componentDidCatch() {
+    if (this.state.attempt < FIGURE_LOAD_MAX_ATTEMPTS) {
+      const attempt = this.state.attempt + 1;
+      this.retryTimeout = setTimeout(() => {
+        useGLTF.clear(this.props.url);
+        this.setState({ failed: false, attempt });
+      }, FIGURE_LOAD_RETRY_DELAY_MS * attempt);
+    }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.retryTimeout);
+  }
+
+  render() {
+    if (this.state.failed) return null;
+    return this.props.children;
+  }
+}
+
 // ── Figure ─────────────────────────────────────────────────────────────────
 function Figure({
   repelSettingsRef,
@@ -498,7 +534,9 @@ export default function FigureHero({
         <PerspectiveCamera makeDefault position={[0, 180, isMobile() ? 620 : 430]} fov={40} near={0.1} far={5000} />
         <CameraRig />
         <Suspense fallback={null}>
-          <Figure repelSettingsRef={repelSettingsRef} scattered={scattered} />
+          <FigureErrorBoundary url={`${CDN_BASE}/figure.glb`}>
+            <Figure repelSettingsRef={repelSettingsRef} scattered={scattered} />
+          </FigureErrorBoundary>
         </Suspense>
       </Canvas>
       <div

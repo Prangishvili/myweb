@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 export default function MotionWorkVideo({
   src,
@@ -33,34 +34,30 @@ export default function MotionWorkVideo({
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Escape") {
-      handleCloseFullscreen();
-    }
-  };
+  useEffect(() => {
+    if (!isFullscreen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") handleCloseFullscreen();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isFullscreen]);
 
   const handleShareLink = async (e: React.MouseEvent) => {
     e.stopPropagation();
     const url = `${window.location.origin}/work/motion-works?video=${index}`;
 
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: "Motion Works",
-          text: "Check out this motion work",
-          url: url,
-        });
-      } catch (err) {
-        console.error("Failed to share:", err);
-      }
-    } else {
-      try {
-        await navigator.clipboard.writeText(url);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      } catch (err) {
-        console.error("Failed to copy link:", err);
-      }
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy link:", err);
     }
   };
 
@@ -78,30 +75,30 @@ export default function MotionWorkVideo({
         />
       </div>
 
-      {isFullscreen && (
-        <div
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
-          onClick={handleCloseFullscreen}
-          onKeyDown={handleKeyDown}
-          tabIndex={0}
-        >
-          <button
-            onClick={handleShareLink}
-            className="absolute top-6 right-6 text-white px-4 py-2 rounded text-sm font-semibold hover:opacity-60 z-50"
+      {isFullscreen &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
+            onClick={handleCloseFullscreen}
           >
-            {copied ? "Copied!" : "Share"}
-          </button>
-          <video
-            ref={fullscreenVideoRef}
-            src={src}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="max-w-full max-h-full object-contain"
-          />
-        </div>
-      )}
+            <button
+              onClick={handleShareLink}
+              className="absolute top-6 right-6 z-50 rounded px-4 py-2 text-sm font-semibold text-white hover:opacity-60"
+            >
+              {copied ? "Copied" : "Share"}
+            </button>
+            <video
+              ref={fullscreenVideoRef}
+              src={src}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="max-h-full max-w-full object-contain"
+            />
+          </div>,
+          document.body,
+        )}
     </>
   );
 }
